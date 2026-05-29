@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import SearchBar from './SearchBar'
-import logo from '/src/assets/logo.png'
 
 function Navbar() {
   return (
@@ -18,14 +17,16 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
+        {/* Logo and Title */}
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
           <img 
-            src={logo} 
+            src="https://placehold.co/60x60/e74c3c/white?text=SRC" 
             alt="SRC Welfare Trust Logo" 
             style={{ 
-              height: "45px", 
+              height: "50px", 
               width: "auto",
-              objectFit: "contain"
+              objectFit: "contain",
+              borderRadius: "10px"
             }} 
           />
           <h2 style={{ color: "white", margin: 0, fontSize: "22px" }}>
