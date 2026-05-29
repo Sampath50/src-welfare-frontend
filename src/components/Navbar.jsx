@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import SearchBar from './SearchBar'
-import logo from '../assets/logo.png'  // This imports your logo
+import logo from '/src/assets/logo.png'
 
 function Navbar() {
   return (
@@ -18,7 +18,6 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Logo and Title */}
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
           <img 
             src={logo} 

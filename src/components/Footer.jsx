@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.png'
+import logo from '/src/assets/logo.png'
 
 function Footer() {
   return (
@@ -49,10 +49,10 @@ function Footer() {
         <div>
           <h4>Follow Us</h4>
           <div style={{ display: "flex", gap: "15px" }}>
-            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📘</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🐦</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📷</a>
-            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🔗</a>
+            <a href="#" target="_blank" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📘</a>
+            <a href="#" target="_blank" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🐦</a>
+            <a href="#" target="_blank" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📷</a>
+            <a href="#" target="_blank" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🔗</a>
           </div>
         </div>
       </div>
