@@ -14,12 +14,14 @@ import Admin from './pages/Admin'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import WhatsAppButton from './components/WhatsAppButton'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div style={{ margin: 0, padding: 0, width: "100%" }}>
         {/* Navigation Bar */}
         <div style={{ 
