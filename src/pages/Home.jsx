@@ -61,7 +61,7 @@ function Home() {
   ]
 
   return (
-    <div>
+    <div style={{ margin: 0, padding: 0 }}>
       {/* Hero Section */}
       <div style={{
         height: "100vh",
@@ -164,24 +164,24 @@ function Home() {
             <div style={{ padding: "30px", backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
               <div style={{ fontSize: "50px" }}>🎯</div>
               <h3 style={{ fontSize: "26px", margin: "20px 0 10px" }}>Our Vision</h3>
-              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>A world where every individual has access to quality education, healthcare, and equal opportunities.</p>
+              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>A world with equal opportunities for all</p>
             </div>
             <div style={{ padding: "30px", backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
               <div style={{ fontSize: "50px" }}>💪</div>
               <h3 style={{ fontSize: "26px", margin: "20px 0 10px" }}>Our Impact</h3>
-              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>Transforming thousands of lives through sustainable programs and dedicated volunteers.</p>
+              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>Transforming lives through action</p>
             </div>
             <div style={{ padding: "30px", backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
               <div style={{ fontSize: "50px" }}>🤝</div>
               <h3 style={{ fontSize: "26px", margin: "20px 0 10px" }}>Our Promise</h3>
-              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>100% transparency in all activities and direct impact on the ground.</p>
+              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>100% transparency in all activities</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Impact Numbers Section - New */}
-      <div style={{ padding: "80px 20px", backgroundColor: "#9c4b8b", color: "white" }}>
+      {/* Impact Numbers Section */}
+      <div style={{ padding: "80px 20px", backgroundColor: "#e74c3c", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>Quick Impact Overview</h2>
           <p style={{ fontSize: "18px", marginBottom: "60px", opacity: 0.9 }}>Our reach across communities</p>
@@ -197,7 +197,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Testimonials Section - New */}
+      {/* Testimonials Section */}
       <div style={{ padding: "80px 20px", backgroundColor: "#f8f9fa" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "42px", textAlign: "center", marginBottom: "15px" }}>What People Say</h2>

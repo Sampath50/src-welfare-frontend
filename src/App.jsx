@@ -19,7 +19,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>
+      <div style={{ margin: 0, padding: 0 }}>
         {/* Navigation Bar - No sticky */}
         <nav style={{ 
           backgroundColor: "#1f2937", 
