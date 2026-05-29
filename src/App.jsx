@@ -7,6 +7,10 @@ import ProgramsUs from './pages/ProgramsUs'
 import Gallery from './pages/Gallery'
 import Admin from './pages/Admin'
 import Footer from './components/Footer'
+import Blog from './pages/Blog'
+import Volunteer from './pages/Volunteer'
+import Events from './pages/Events'
+import FAQ from './pages/FAQ'
 
 function App() {
   return (
@@ -30,6 +34,10 @@ function App() {
             <Link to="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</Link>
             <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#2563eb", padding: "5px 15px", borderRadius: "5px" }}>Donate</Link>
             <Link to="/admin" style={{ color: "white", textDecoration: "none", backgroundColor: "#dc2626", padding: "5px 15px", borderRadius: "5px" }}>Admin</Link>
+            <Link to="/blog" style={{ color: "white", textDecoration: "none" }}>Blog</Link>
+            <Link to="/volunteer" style={{ color: "white", textDecoration: "none" }}>Volunteer</Link>
+            <Link to="/events" style={{ color: "white", textDecoration: "none" }}>Events</Link>
+            <Link to="/faq" style={{ color: "white", textDecoration: "none" }}>FAQ</Link>
           </div>
         </nav>
 
@@ -41,6 +49,10 @@ function App() {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/donate" element={<DonateUs />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/volunteer" element={<Volunteer />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
 
         <Footer />
