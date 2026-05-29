@@ -1,52 +1,39 @@
 import { Link } from "react-router-dom"
-import SearchBar from "./SearchBar"
 
 function Navbar() {
   return (
-    <div style={{
-      backgroundColor: "#1f2937",
+    <div style={{ 
+      backgroundColor: "#1f2937", 
       padding: "15px 20px",
       width: "100%",
-      display: "block"
+      position: "relative",
+      top: 0,
+      left: 0
     }}>
       <div style={{
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         flexWrap: "wrap",
-        maxWidth: "1400px",
+        maxWidth: "1200px",
         margin: "0 auto"
       }}>
-        <h2 style={{ color: "white", margin: 0, fontSize: "22px" }}>
+        <div style={{ color: "white", fontSize: "24px", fontWeight: "bold" }}>
           SRC Welfare Trust
-        </h2>
+        </div>
         
-        <div style={{ 
-          display: "flex", 
-          gap: "15px", 
-          flexWrap: "wrap", 
-          alignItems: "center",
-          rowGap: "10px"
-        }}>
-          <Link to="/" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Home</Link>
-          <Link to="/about" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>About</Link>
-          <Link to="/programs" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Programs</Link>
-          <Link to="/gallery" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Gallery</Link>
-          <Link to="/blog" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Blog</Link>
-          <Link to="/events" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Events</Link>
-          <Link to="/volunteer" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Volunteer</Link>
-          <Link to="/faq" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>FAQ</Link>
-          <Link to="/contact" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Contact</Link>
-          <Link to="/donate" style={{ 
-            color: "white", 
-            textDecoration: "none", 
-            backgroundColor: "#e74c3c", 
-            padding: "5px 12px", 
-            borderRadius: "5px",
-            fontSize: "14px"
-          }}>Donate</Link>
-          <Link to="/admin" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Admin</Link>
-          <SearchBar />
+        <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
+          <a href="/" style={{ color: "white", textDecoration: "none" }}>Home</a>
+          <a href="/about" style={{ color: "white", textDecoration: "none" }}>About</a>
+          <a href="/programs" style={{ color: "white", textDecoration: "none" }}>Programs</a>
+          <a href="/gallery" style={{ color: "white", textDecoration: "none" }}>Gallery</a>
+          <a href="/blog" style={{ color: "white", textDecoration: "none" }}>Blog</a>
+          <a href="/events" style={{ color: "white", textDecoration: "none" }}>Events</a>
+          <a href="/volunteer" style={{ color: "white", textDecoration: "none" }}>Volunteer</a>
+          <a href="/faq" style={{ color: "white", textDecoration: "none" }}>FAQ</a>
+          <a href="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</a>
+          <a href="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "5px 12px", borderRadius: "5px" }}>Donate</a>
+          <a href="/admin" style={{ color: "white", textDecoration: "none" }}>Admin</a>
         </div>
       </div>
     </div>
