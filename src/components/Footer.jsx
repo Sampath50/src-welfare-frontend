@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import logo from '../assets/logo.png'
 
 function Footer() {
   return (
@@ -6,7 +7,18 @@ function Footer() {
       <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "40px" }}>
         
         <div>
-          <h3>SRC Welfare Trust</h3>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
+            <img 
+              src={logo} 
+              alt="SRC Welfare Trust Logo" 
+              style={{ 
+                height: "45px", 
+                width: "auto",
+                objectFit: "contain"
+              }} 
+            />
+            <h3>SRC Welfare Trust</h3>
+          </div>
           <p>Making a difference in lives through education, healthcare, and social welfare programs.</p>
         </div>
         
@@ -29,7 +41,7 @@ function Footer() {
         
         <div>
           <h4>Contact Info</h4>
-          <p>📍 D.No.1-1-27/2 Plot No-2 3rd floor Kapra, Hyederabad, Telengana</p>
+          <p>📍 D.No.1-1-27/2 Plot No-2 3rd floor Kapra, Hyderabad, Telangana</p>
           <p>📞 9392302450</p>
           <p>📧 srcwelfare@info.com</p>
         </div>
@@ -37,10 +49,10 @@ function Footer() {
         <div>
           <h4>Follow Us</h4>
           <div style={{ display: "flex", gap: "15px" }}>
-            <a href="YOUR_FACEBOOK_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📘</a>
-            <a href="YOUR_TWITTER_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🐦</a>
-            <a href="YOUR_INSTAGRAM_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📷</a>
-            <a href="YOUR_LINKEDIN_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🔗</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📘</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🐦</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📷</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🔗</a>
           </div>
         </div>
       </div>
