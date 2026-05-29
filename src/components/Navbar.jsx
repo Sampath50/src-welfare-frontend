@@ -17,9 +17,10 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Text Logo - Always works */}
+        {/* Logo Section */}
         <Link to="/" style={{ textDecoration: "none" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            {/* Red Square with S */}
             <div style={{
               backgroundColor: "#e74c3c",
               width: "45px",
@@ -29,11 +30,12 @@ function Navbar() {
               alignItems: "center",
               justifyContent: "center",
               fontWeight: "bold",
-              fontSize: "18px",
+              fontSize: "22px",
               color: "white"
             }}>
               S
             </div>
+            {/* Text */}
             <div>
               <div style={{ color: "white", fontWeight: "bold", fontSize: "16px", lineHeight: "1.2" }}>
                 SRC
