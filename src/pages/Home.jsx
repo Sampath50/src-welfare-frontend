@@ -181,7 +181,7 @@ function Home() {
       </div>
 
       {/* Impact Numbers Section - New */}
-      <div style={{ padding: "80px 20px", backgroundColor: "#e74c3c", color: "white" }}>
+      <div style={{ padding: "80px 20px", backgroundColor: "#9c4b8b", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>Quick Impact Overview</h2>
           <p style={{ fontSize: "18px", marginBottom: "60px", opacity: 0.9 }}>Our reach across communities</p>
