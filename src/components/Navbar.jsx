@@ -17,7 +17,7 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Logo - Top Left (Your Custom Logo) */}
+        {/* Custom Logo - Top Left */}
         <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <img 
             src="https://i.ibb.co/ZpyWxxj3/logo-png.png" 
