@@ -4,7 +4,9 @@ import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
 import DonateUs from './pages/DonateUs'
 import ProgramsUs from './pages/ProgramsUs'
+import Gallery from './pages/Gallery'
 import Admin from './pages/Admin'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -24,8 +26,10 @@ function App() {
             <Link to="/" style={{ color: "white", textDecoration: "none" }}>Home</Link>
             <Link to="/about" style={{ color: "white", textDecoration: "none" }}>About</Link>
             <Link to="/programs" style={{ color: "white", textDecoration: "none" }}>Programs</Link>
+            <Link to="/gallery" style={{ color: "white", textDecoration: "none" }}>Gallery</Link>
             <Link to="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</Link>
             <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#2563eb", padding: "5px 15px", borderRadius: "5px" }}>Donate</Link>
+            <Link to="/admin" style={{ color: "white", textDecoration: "none", backgroundColor: "#dc2626", padding: "5px 15px", borderRadius: "5px" }}>Admin</Link>
           </div>
         </nav>
 
@@ -33,9 +37,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/programs" element={<ProgramsUs />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/donate" element={<DonateUs />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
+
+        <Footer />
       </div>
     </BrowserRouter>
   )
