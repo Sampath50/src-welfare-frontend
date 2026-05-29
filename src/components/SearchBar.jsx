@@ -7,17 +7,17 @@ function SearchBar() {
   const [showResults, setShowResults] = useState(false)
 
   const allContent = [
-    { title: "Home", url: "/", category: "Page" },
-    { title: "About Us", url: "/about", category: "Page" },
-    { title: "Programs", url: "/programs", category: "Page" },
-    { title: "Gallery", url: "/gallery", category: "Page" },
-    { title: "Blog", url: "/blog", category: "Page" },
-    { title: "Events", url: "/events", category: "Page" },
-    { title: "Volunteer", url: "/volunteer", category: "Page" },
-    { title: "FAQ", url: "/faq", category: "Page" },
-    { title: "Contact", url: "/contact", category: "Page" },
-    { title: "Donate", url: "/donate", category: "Page" },
-    { title: "Admin", url: "/admin", category: "Page" }
+    { title: "Home", url: "/" },
+    { title: "About", url: "/about" },
+    { title: "Programs", url: "/programs" },
+    { title: "Gallery", url: "/gallery" },
+    { title: "Blog", url: "/blog" },
+    { title: "Events", url: "/events" },
+    { title: "Volunteer", url: "/volunteer" },
+    { title: "FAQ", url: "/faq" },
+    { title: "Contact", url: "/contact" },
+    { title: "Donate", url: "/donate" },
+    { title: "Admin", url: "/admin" }
   ]
 
   const handleSearch = (e) => {
