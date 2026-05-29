@@ -8,13 +8,12 @@ function Footer() {
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
             <img 
-              src="https://placehold.co/60x60/e74c3c/white?text=SRC" 
+              src="https://i.ibb.co/ZpyWxxj3/logo-png.png" 
               alt="SRC Welfare Trust Logo" 
               style={{ 
-                height: "50px", 
+                height: "45px", 
                 width: "auto",
-                objectFit: "contain",
-                borderRadius: "10px"
+                objectFit: "contain"
               }} 
             />
             <h3>SRC Welfare Trust</h3>
