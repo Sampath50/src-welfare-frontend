@@ -17,17 +17,32 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Custom Logo - Top Left */}
-        <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-          <img 
-            src="https://i.ibb.co/ZpyWxxj3/logo-png.png" 
-            alt="SRC Welfare Trust Logo" 
-            style={{ 
-              height: "55px", 
-              width: "auto",
-              objectFit: "contain"
-            }} 
-          />
+        {/* Text Logo - Always works */}
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div style={{
+              backgroundColor: "#e74c3c",
+              width: "45px",
+              height: "45px",
+              borderRadius: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: "bold",
+              fontSize: "18px",
+              color: "white"
+            }}>
+              S
+            </div>
+            <div>
+              <div style={{ color: "white", fontWeight: "bold", fontSize: "16px", lineHeight: "1.2" }}>
+                SRC
+              </div>
+              <div style={{ color: "#e74c3c", fontSize: "10px", letterSpacing: "1px" }}>
+                WELFARE TRUST
+              </div>
+            </div>
+          </div>
         </Link>
         
         {/* Desktop Menu */}

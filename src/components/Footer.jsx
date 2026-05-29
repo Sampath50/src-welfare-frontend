@@ -7,16 +7,24 @@ function Footer() {
         
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
-            <img 
-              src="https://i.ibb.co/ZpyWxxj3/logo-png.png" 
-              alt="SRC Welfare Trust Logo" 
-              style={{ 
-                height: "45px", 
-                width: "auto",
-                objectFit: "contain"
-              }} 
-            />
-            <h3>SRC Welfare Trust</h3>
+            <div style={{
+              backgroundColor: "#e74c3c",
+              width: "40px",
+              height: "40px",
+              borderRadius: "8px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: "bold",
+              fontSize: "16px",
+              color: "white"
+            }}>
+              S
+            </div>
+            <div>
+              <div style={{ color: "white", fontWeight: "bold", fontSize: "14px" }}>SRC</div>
+              <div style={{ color: "#e74c3c", fontSize: "10px" }}>WELFARE TRUST</div>
+            </div>
           </div>
           <p>Making a difference in lives through education, healthcare, and social welfare programs.</p>
         </div>
