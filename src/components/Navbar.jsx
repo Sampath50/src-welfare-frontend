@@ -17,10 +17,9 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Logo Section */}
+        {/* Logo */}
         <Link to="/" style={{ textDecoration: "none" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            {/* Red Square with S */}
             <div style={{
               backgroundColor: "#e74c3c",
               width: "45px",
@@ -29,31 +28,21 @@ function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontWeight: "bold",
               fontSize: "22px",
+              fontWeight: "bold",
               color: "white"
             }}>
               S
             </div>
-            {/* Text */}
             <div>
-              <div style={{ color: "white", fontWeight: "bold", fontSize: "16px", lineHeight: "1.2" }}>
-                SRC
-              </div>
-              <div style={{ color: "#e74c3c", fontSize: "10px", letterSpacing: "1px" }}>
-                WELFARE TRUST
-              </div>
+              <div style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>SRC</div>
+              <div style={{ color: "#e74c3c", fontSize: "10px" }}>WELFARE TRUST</div>
             </div>
           </div>
         </Link>
         
-        {/* Desktop Menu */}
-        <div style={{ 
-          display: "flex", 
-          gap: "15px", 
-          flexWrap: "wrap",
-          alignItems: "center"
-        }} className="desktop-menu">
+        {/* Menu Links */}
+        <div style={{ display: "flex", gap: "15px", flexWrap: "wrap", alignItems: "center" }}>
           <Link to="/" style={{ color: "white", textDecoration: "none" }}>Home</Link>
           <Link to="/about" style={{ color: "white", textDecoration: "none" }}>About</Link>
           <Link to="/programs" style={{ color: "white", textDecoration: "none" }}>Programs</Link>
