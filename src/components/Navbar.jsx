@@ -1,67 +1,55 @@
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import SearchBar from "./SearchBar"
 
 function Navbar() {
-
-  const [menuOpen, setMenuOpen] = useState(false)
-
   return (
-    <nav className="bg-blue-700 text-white">
-
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-        {/* Logo */}
-        <h1 className="text-2xl font-bold">
+    <div style={{
+      backgroundColor: "#1f2937",
+      padding: "15px 20px",
+      width: "100%",
+      display: "block"
+    }}>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexWrap: "wrap",
+        maxWidth: "1400px",
+        margin: "0 auto"
+      }}>
+        <h2 style={{ color: "white", margin: 0, fontSize: "22px" }}>
           SRC Welfare Trust
-        </h1>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6 text-lg">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/programs">Programs</Link>
-          <Link to="/donate">Donate</Link>
-          <Link to="/contact">Contact</Link>
+        </h2>
+        
+        <div style={{ 
+          display: "flex", 
+          gap: "15px", 
+          flexWrap: "wrap", 
+          alignItems: "center",
+          rowGap: "10px"
+        }}>
+          <Link to="/" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Home</Link>
+          <Link to="/about" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>About</Link>
+          <Link to="/programs" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Programs</Link>
+          <Link to="/gallery" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Gallery</Link>
+          <Link to="/blog" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Blog</Link>
+          <Link to="/events" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Events</Link>
+          <Link to="/volunteer" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Volunteer</Link>
+          <Link to="/faq" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>FAQ</Link>
+          <Link to="/contact" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Contact</Link>
+          <Link to="/donate" style={{ 
+            color: "white", 
+            textDecoration: "none", 
+            backgroundColor: "#e74c3c", 
+            padding: "5px 12px", 
+            borderRadius: "5px",
+            fontSize: "14px"
+          }}>Donate</Link>
+          <Link to="/admin" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Admin</Link>
+          <SearchBar />
         </div>
-
-        {/* Mobile Button */}
-        <button
-          className="md:hidden text-3xl"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          ☰
-        </button>
-
       </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden flex flex-col px-6 pb-4 gap-4 text-lg bg-blue-800">
-
-          <Link to="/" onClick={() => setMenuOpen(false)}>
-            Home
-          </Link>
-
-          <Link to="/about" onClick={() => setMenuOpen(false)}>
-            About
-          </Link>
-
-          <Link to="/programs" onClick={() => setMenuOpen(false)}>
-            Programs
-          </Link>
-
-          <Link to="/donate" onClick={() => setMenuOpen(false)}>
-            Donate
-          </Link>
-
-          <Link to="/contact" onClick={() => setMenuOpen(false)}>
-            Contact
-          </Link>
-
-        </div>
-      )}
-
-    </nav>
+    </div>
   )
 }
 
