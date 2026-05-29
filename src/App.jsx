@@ -13,6 +13,7 @@ import FAQ from './pages/FAQ'
 import Admin from './pages/Admin'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
+import WhatsAppButton from './components/WhatsAppButton'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -116,6 +117,7 @@ function App() {
         </Routes>
 
         <Footer />
+        <WhatsAppButton />
       </div>
 
       <style>{`
