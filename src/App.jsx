@@ -19,47 +19,47 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div style={{ margin: 0, padding: 0 }}>
-        {/* Navigation Bar - No sticky */}
-        <nav style={{ 
+      <div style={{ margin: 0, padding: 0, width: "100%" }}>
+        {/* Navigation Bar */}
+        <div style={{ 
           backgroundColor: "#1f2937", 
-          padding: "15px 20px", 
-          zIndex: 1000
+          padding: "15px 20px",
+          width: "100%"
         }}>
           <div style={{ 
             display: "flex", 
             justifyContent: "space-between", 
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "10px"
+            maxWidth: "1400px",
+            margin: "0 auto"
           }}>
-            <h2 style={{ color: "white", margin: 0, fontSize: "clamp(18px, 5vw, 24px)" }}>
+            <h2 style={{ color: "white", margin: 0, fontSize: "22px" }}>
               SRC Welfare Trust
             </h2>
             
-            {/* Desktop Menu with SearchBar */}
+            {/* Desktop Menu */}
             <div style={{ 
               display: "flex", 
               gap: "15px", 
               flexWrap: "wrap",
-              justifyContent: "center",
               alignItems: "center"
             }} className="desktop-menu">
-              <Link to="/" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Home</Link>
-              <Link to="/about" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>About</Link>
-              <Link to="/programs" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Programs</Link>
-              <Link to="/gallery" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Gallery</Link>
-              <Link to="/blog" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Blog</Link>
-              <Link to="/events" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Events</Link>
-              <Link to="/volunteer" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Volunteer</Link>
-              <Link to="/faq" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>FAQ</Link>
-              <Link to="/contact" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Contact</Link>
-              <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "5px 12px", borderRadius: "5px", fontSize: "14px" }}>Donate</Link>
-              <Link to="/admin" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Admin</Link>
+              <Link to="/" style={{ color: "white", textDecoration: "none" }}>Home</Link>
+              <Link to="/about" style={{ color: "white", textDecoration: "none" }}>About</Link>
+              <Link to="/programs" style={{ color: "white", textDecoration: "none" }}>Programs</Link>
+              <Link to="/gallery" style={{ color: "white", textDecoration: "none" }}>Gallery</Link>
+              <Link to="/blog" style={{ color: "white", textDecoration: "none" }}>Blog</Link>
+              <Link to="/events" style={{ color: "white", textDecoration: "none" }}>Events</Link>
+              <Link to="/volunteer" style={{ color: "white", textDecoration: "none" }}>Volunteer</Link>
+              <Link to="/faq" style={{ color: "white", textDecoration: "none" }}>FAQ</Link>
+              <Link to="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</Link>
+              <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "5px 12px", borderRadius: "5px" }}>Donate</Link>
+              <Link to="/admin" style={{ color: "white", textDecoration: "none" }}>Admin</Link>
               <SearchBar />
             </div>
 
-            {/* Hamburger Menu Button */}
+            {/* Hamburger Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               style={{
@@ -86,20 +86,20 @@ function App() {
               paddingTop: "15px",
               borderTop: "1px solid #374151"
             }} className="mobile-menu">
-              <Link to="/" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Home</Link>
-              <Link to="/about" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>About</Link>
-              <Link to="/programs" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Programs</Link>
-              <Link to="/gallery" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Gallery</Link>
-              <Link to="/blog" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Blog</Link>
-              <Link to="/events" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Events</Link>
-              <Link to="/volunteer" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Volunteer</Link>
-              <Link to="/faq" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>FAQ</Link>
-              <Link to="/contact" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Contact</Link>
+              <Link to="/" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Home</Link>
+              <Link to="/about" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>About</Link>
+              <Link to="/programs" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Programs</Link>
+              <Link to="/gallery" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Gallery</Link>
+              <Link to="/blog" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Blog</Link>
+              <Link to="/events" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Events</Link>
+              <Link to="/volunteer" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Volunteer</Link>
+              <Link to="/faq" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>FAQ</Link>
+              <Link to="/contact" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Contact</Link>
               <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "8px 12px", borderRadius: "5px", textAlign: "center" }} onClick={() => setMenuOpen(false)}>Donate</Link>
-              <Link to="/admin" style={{ color: "white", textDecoration: "none", padding: "8px 0" }} onClick={() => setMenuOpen(false)}>Admin</Link>
+              <Link to="/admin" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Admin</Link>
             </div>
           )}
-        </nav>
+        </div>
 
         <Routes>
           <Route path="/" element={<Home />} />
