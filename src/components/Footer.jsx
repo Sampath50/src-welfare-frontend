@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import logo from '/src/assets/logo.png'
 
 function Footer() {
   return (
@@ -9,13 +8,9 @@ function Footer() {
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
             <img 
-              src={logo} 
+              src="https://placehold.co/45x45/e74c3c/white?text=S" 
               alt="SRC Welfare Trust Logo" 
-              style={{ 
-                height: "45px", 
-                width: "auto",
-                objectFit: "contain"
-              }} 
+              style={{ height: "45px", width: "auto", objectFit: "contain", borderRadius: "8px" }} 
             />
             <h3>SRC Welfare Trust</h3>
           </div>
