@@ -9,7 +9,6 @@ function Home() {
     setAnimate(true)
   }, [])
 
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
@@ -42,10 +41,23 @@ function Home() {
   }
 
   const stats = [
-    { number: "500+", label: "Families Helped", icon: "👨‍👩‍👧‍👦" },
-    { number: "1200+", label: "Students Supported", icon: "📚" },
-    { number: "50+", label: "Medical Camps", icon: "🏥" },
-    { number: "100+", label: "Volunteers", icon: "🤝" }
+    { number: "500+", label: "Families Helped", icon: "👨‍👩‍👧‍👦", description: "Provided food, shelter, and support" },
+    { number: "1200+", label: "Students Supported", icon: "📚", description: "Scholarships and school supplies" },
+    { number: "50+", label: "Medical Camps", icon: "🏥", description: "Free health checkups and medicines" },
+    { number: "100+", label: "Volunteers", icon: "🤝", description: "Dedicated change-makers" }
+  ]
+
+  const impactNumbers = [
+    { number: "10+", label: "Villages Covered", icon: "🏘️" },
+    { number: "25+", label: "Events Organized", icon: "🎉" },
+    { number: "15+", label: "Partner NGOs", icon: "🤝" },
+    { number: "200+", label: "Active Donors", icon: "❤️" }
+  ]
+
+  const testimonials = [
+    { name: "Rajesh Kumar", role: "Parent", text: "SRC Welfare Trust helped my daughter continue her education. Forever grateful!", rating: 5 },
+    { name: "Priya Sharma", role: "Volunteer", text: "Working with this organization has been life-changing. Their dedication is inspiring.", rating: 5 },
+    { name: "Dr. Suresh Reddy", role: "Partner", text: "Their medical camps have brought healthcare to remote villages.", rating: 5 }
   ]
 
   return (
@@ -68,106 +80,170 @@ function Home() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: "rgba(0,0,0,0.6)"
+          backgroundColor: "rgba(0,0,0,0.65)"
         }}></div>
         
         <div style={{ position: "relative", textAlign: "center", color: "white", padding: "20px", animation: animate ? "fadeInUp 1s ease-out" : "none" }}>
-          <h1 style={{ fontSize: "60px", marginBottom: "20px" }}>SRC Welfare Trust</h1>
-          <p style={{ fontSize: "22px", maxWidth: "700px", margin: "0 auto" }}>
+          <h1 style={{ fontSize: "65px", marginBottom: "20px", fontWeight: "bold" }}>SRC Welfare Trust</h1>
+          <p style={{ fontSize: "24px", maxWidth: "700px", margin: "0 auto", lineHeight: "1.4" }}>
             Together we can support education, healthcare, food drives, and social welfare programs.
           </p>
-          <a href="/donate">
-            <button style={{
-              marginTop: "30px",
-              backgroundColor: "#2563eb",
-              color: "white",
-              padding: "15px 40px",
-              border: "none",
-              borderRadius: "50px",
-              fontSize: "18px",
-              cursor: "pointer",
-              transition: "transform 0.3s"
-            }}
-            onMouseEnter={(e) => e.target.style.transform = "scale(1.05)"}
-            onMouseLeave={(e) => e.target.style.transform = "scale(1)"}>
-              Donate Now ❤️
-            </button>
-          </a>
+          <div style={{ marginTop: "40px", display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="/donate">
+              <button style={{
+                backgroundColor: "#e74c3c",
+                color: "white",
+                padding: "15px 40px",
+                border: "none",
+                borderRadius: "50px",
+                fontSize: "18px",
+                cursor: "pointer",
+                transition: "transform 0.3s",
+                fontWeight: "bold"
+              }}
+              onMouseEnter={(e) => e.target.style.transform = "scale(1.05)"}
+              onMouseLeave={(e) => e.target.style.transform = "scale(1)"}>
+                Donate Now ❤️
+              </button>
+            </a>
+            <a href="/programs">
+              <button style={{
+                backgroundColor: "transparent",
+                color: "white",
+                padding: "15px 40px",
+                border: "2px solid white",
+                borderRadius: "50px",
+                fontSize: "18px",
+                cursor: "pointer",
+                transition: "transform 0.3s"
+              }}
+              onMouseEnter={(e) => e.target.style.transform = "scale(1.05)"}
+              onMouseLeave={(e) => e.target.style.transform = "scale(1)"}>
+                Our Programs
+              </button>
+            </a>
+          </div>
         </div>
       </div>
 
       {/* Statistics Section */}
-      <div style={{ padding: "80px 20px", backgroundColor: "#f3f4f6" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "30px", textAlign: "center" }}>
-          {stats.map((stat, index) => (
-            <div key={index} style={{ 
-              backgroundColor: "white", 
-              padding: "40px 30px", 
-              borderRadius: "15px",
-              transition: "transform 0.3s",
-              cursor: "pointer"
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
-              <div style={{ fontSize: "50px" }}>{stat.icon}</div>
-              <h2 style={{ fontSize: "48px", color: "#2563eb", margin: "10px 0" }}>{stat.number}</h2>
-              <p style={{ fontSize: "18px", color: "#666" }}>{stat.label}</p>
-            </div>
-          ))}
+      <div style={{ padding: "80px 20px", backgroundColor: "#f8f9fa" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h2 style={{ fontSize: "42px", textAlign: "center", marginBottom: "15px" }}>Our Impact in Numbers</h2>
+          <p style={{ textAlign: "center", fontSize: "18px", color: "#666", marginBottom: "60px" }}>Making a real difference in communities</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "30px", textAlign: "center" }}>
+            {stats.map((stat, index) => (
+              <div key={index} style={{ 
+                backgroundColor: "white", 
+                padding: "40px 25px", 
+                borderRadius: "15px",
+                transition: "transform 0.3s",
+                cursor: "pointer",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.1)"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"}
+              onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+                <div style={{ fontSize: "55px" }}>{stat.icon}</div>
+                <h2 style={{ fontSize: "52px", color: "#e74c3c", margin: "15px 0 5px 0", fontWeight: "bold" }}>{stat.number}</h2>
+                <h3 style={{ fontSize: "22px", margin: "10px 0" }}>{stat.label}</h3>
+                <p style={{ fontSize: "14px", color: "#888", marginTop: "10px" }}>{stat.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Mission Section */}
       <div style={{ padding: "80px 20px", backgroundColor: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontSize: "36px", marginBottom: "20px" }}>Our Mission</h2>
-          <p style={{ fontSize: "18px", color: "#666", maxWidth: "800px", margin: "0 auto 40px" }}>
+          <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>Our Mission & Vision</h2>
+          <p style={{ fontSize: "20px", color: "#555", maxWidth: "800px", margin: "0 auto 60px", lineHeight: "1.6" }}>
             To empower underserved communities through education, healthcare, and social welfare programs.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "30px", marginTop: "40px" }}>
-            <div style={{ padding: "30px" }}>
-              <div style={{ fontSize: "40px" }}>🎯</div>
-              <h3>Our Vision</h3>
-              <p>A world with equal opportunities for all</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "40px", marginTop: "40px" }}>
+            <div style={{ padding: "30px", backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
+              <div style={{ fontSize: "50px" }}>🎯</div>
+              <h3 style={{ fontSize: "26px", margin: "20px 0 10px" }}>Our Vision</h3>
+              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>A world where every individual has access to quality education, healthcare, and equal opportunities.</p>
             </div>
-            <div style={{ padding: "30px" }}>
-              <div style={{ fontSize: "40px" }}>💪</div>
-              <h3>Our Impact</h3>
-              <p>Transforming lives through action</p>
+            <div style={{ padding: "30px", backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
+              <div style={{ fontSize: "50px" }}>💪</div>
+              <h3 style={{ fontSize: "26px", margin: "20px 0 10px" }}>Our Impact</h3>
+              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>Transforming thousands of lives through sustainable programs and dedicated volunteers.</p>
             </div>
-            <div style={{ padding: "30px" }}>
-              <div style={{ fontSize: "40px" }}>🤝</div>
-              <h3>Our Promise</h3>
-              <p>100% transparency in all activities</p>
+            <div style={{ padding: "30px", backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
+              <div style={{ fontSize: "50px" }}>🤝</div>
+              <h3 style={{ fontSize: "26px", margin: "20px 0 10px" }}>Our Promise</h3>
+              <p style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>100% transparency in all activities and direct impact on the ground.</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Contact Form Section */}
-      <div style={{ padding: "80px 20px", backgroundColor: "#f9fafb" }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <h2 style={{ fontSize: "48px", textAlign: "center" }}>Contact Us</h2>
-          <p style={{ textAlign: "center", color: "#666", marginBottom: "50px" }}>Have questions? We'd love to hear from you.</p>
+      {/* Impact Numbers Section - New */}
+      <div style={{ padding: "80px 20px", backgroundColor: "#e74c3c", color: "white" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>Quick Impact Overview</h2>
+          <p style={{ fontSize: "18px", marginBottom: "60px", opacity: 0.9 }}>Our reach across communities</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "40px" }}>
+            {impactNumbers.map((item, index) => (
+              <div key={index}>
+                <div style={{ fontSize: "60px" }}>{item.icon}</div>
+                <h3 style={{ fontSize: "44px", margin: "15px 0 5px", fontWeight: "bold" }}>{item.number}</h3>
+                <p style={{ fontSize: "18px", opacity: 0.9 }}>{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-          {status === "success" && <div style={{ backgroundColor: "#d1fae5", color: "#065f46", padding: "15px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>✅ Message sent successfully!</div>}
+      {/* Testimonials Section - New */}
+      <div style={{ padding: "80px 20px", backgroundColor: "#f8f9fa" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h2 style={{ fontSize: "42px", textAlign: "center", marginBottom: "15px" }}>What People Say</h2>
+          <p style={{ textAlign: "center", fontSize: "18px", color: "#666", marginBottom: "60px" }}>Stories of hope and transformation</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
+            {testimonials.map((testimonial, index) => (
+              <div key={index} style={{ backgroundColor: "white", padding: "30px", borderRadius: "15px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}>
+                <div style={{ fontSize: "40px", marginBottom: "15px" }}>"</div>
+                <p style={{ fontSize: "16px", lineHeight: "1.6", color: "#555", marginBottom: "20px" }}>{testimonial.text}</p>
+                <div style={{ marginTop: "15px" }}>
+                  <h4 style={{ margin: "0", fontSize: "18px" }}>{testimonial.name}</h4>
+                  <p style={{ margin: "5px 0 0", fontSize: "14px", color: "#e74c3c" }}>{testimonial.role}</p>
+                  <div style={{ color: "#f39c12", marginTop: "8px" }}>{"★".repeat(testimonial.rating)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Form Section */}
+      <div style={{ padding: "80px 20px", backgroundColor: "white" }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <h2 style={{ fontSize: "42px", textAlign: "center", marginBottom: "15px" }}>Get In Touch</h2>
+          <p style={{ textAlign: "center", color: "#666", marginBottom: "50px", fontSize: "18px" }}>Have questions? We'd love to hear from you.</p>
+
+          {status === "success" && <div style={{ backgroundColor: "#d1fae5", color: "#065f46", padding: "15px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>✅ Message sent successfully! We'll get back to you soon.</div>}
           {status === "error" && <div style={{ backgroundColor: "#fee2e2", color: "#991b1b", padding: "15px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>❌ Failed to send. Please try again.</div>}
           {status === "sending" && <div style={{ backgroundColor: "#dbeafe", color: "#1e40af", padding: "15px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>📧 Sending message...</div>}
 
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: "20px" }}>
-              <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Name</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} required style={{ width: "100%", padding: "12px", border: "1px solid #ccc", borderRadius: "8px" }} />
+              <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Name *</label>
+              <input type="text" name="name" value={formData.name} onChange={handleChange} required style={{ width: "100%", padding: "14px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "16px" }} />
             </div>
             <div style={{ marginBottom: "20px" }}>
-              <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: "100%", padding: "12px", border: "1px solid #ccc", borderRadius: "8px" }} />
+              <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Email *</label>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: "100%", padding: "14px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "16px" }} />
             </div>
-            <div style={{ marginBottom: "20px" }}>
-              <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Message</label>
-              <textarea rows="5" name="message" value={formData.message} onChange={handleChange} required style={{ width: "100%", padding: "12px", border: "1px solid #ccc", borderRadius: "8px" }}></textarea>
+            <div style={{ marginBottom: "25px" }}>
+              <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Message *</label>
+              <textarea rows="5" name="message" value={formData.message} onChange={handleChange} required style={{ width: "100%", padding: "14px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "16px", fontFamily: "inherit" }}></textarea>
             </div>
-            <button type="submit" disabled={status === "sending"} style={{ width: "100%", backgroundColor: "#2563eb", color: "white", padding: "14px", border: "none", borderRadius: "50px", fontSize: "16px", cursor: "pointer" }}>
+            <button type="submit" disabled={status === "sending"} style={{ width: "100%", backgroundColor: "#e74c3c", color: "white", padding: "16px", border: "none", borderRadius: "50px", fontSize: "18px", fontWeight: "bold", cursor: "pointer", transition: "transform 0.3s" }}
+            onMouseEnter={(e) => e.target.style.transform = "scale(1.02)"}
+            onMouseLeave={(e) => e.target.style.transform = "scale(1)"}>
               {status === "sending" ? "Sending..." : "Send Message ✉️"}
             </button>
           </form>
