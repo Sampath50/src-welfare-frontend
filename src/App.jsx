@@ -20,19 +20,18 @@ function App() {
   return (
     <BrowserRouter>
       <div>
-        {/* Mobile-Friendly Navigation */}
+        {/* Navigation Bar - No sticky */}
         <nav style={{ 
           backgroundColor: "#1f2937", 
           padding: "15px 20px", 
-          position: "sticky",
-          top: 0,
           zIndex: 1000
         }}>
           <div style={{ 
             display: "flex", 
             justifyContent: "space-between", 
             alignItems: "center",
-            flexWrap: "wrap"
+            flexWrap: "wrap",
+            gap: "10px"
           }}>
             <h2 style={{ color: "white", margin: 0, fontSize: "clamp(18px, 5vw, 24px)" }}>
               SRC Welfare Trust
@@ -57,12 +56,10 @@ function App() {
               <Link to="/contact" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Contact</Link>
               <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "5px 12px", borderRadius: "5px", fontSize: "14px" }}>Donate</Link>
               <Link to="/admin" style={{ color: "white", textDecoration: "none", fontSize: "14px" }}>Admin</Link>
-              
-              {/* Search Bar */}
               <SearchBar />
             </div>
 
-            {/* Hamburger Menu Button (mobile only) */}
+            {/* Hamburger Menu Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               style={{
