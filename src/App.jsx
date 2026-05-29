@@ -4,6 +4,7 @@ import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
 import DonateUs from './pages/DonateUs'
 import ProgramsUs from './pages/ProgramsUs'
+import Admin from './pages/Admin'
 
 function App() {
   return (
