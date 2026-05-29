@@ -11,8 +11,8 @@ function ContactUs() {
           <div>
             <h2 style={{ fontSize: "28px", marginBottom: "20px" }}>Get in Touch</h2>
             <div style={{ marginBottom: "20px" }}>
-              <p><strong>📍 Address:</strong> 123 Welfare Street, New Delhi, India</p>
-              <p><strong>📞 Phone:</strong> +91 12345 67890</p>
+              <p><strong>📍 Address:</strong> D.No.1-1-27/2 Plot No-2 3rd floor Kapra, Hyederabad, Telengana</p>
+              <p><strong>📞 Phone:</strong> +91 9392302450</p>
               <p><strong>📧 Email:</strong> info@srcwelfare.org</p>
               <p><strong>⏰ Office Hours:</strong> Mon-Fri, 9 AM - 6 PM</p>
             </div>

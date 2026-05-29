@@ -29,18 +29,18 @@ function Footer() {
         
         <div>
           <h4>Contact Info</h4>
-          <p>📍 123 Welfare Street, New Delhi, India</p>
-          <p>📞 +91 12345 67890</p>
-          <p>📧 info@srcwelfare.org</p>
+          <p>📍 D.No.1-1-27/2 Plot No-2 3rd floor Kapra, Hyederabad, Telengana</p>
+          <p>📞 9392302450</p>
+          <p>📧 srcwelfare@info.com</p>
         </div>
         
         <div>
           <h4>Follow Us</h4>
           <div style={{ display: "flex", gap: "15px" }}>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📘</a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🐦</a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📷</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🔗</a>
+            <a href="YOUR_FACEBOOK_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📘</a>
+            <a href="YOUR_TWITTER_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🐦</a>
+            <a href="YOUR_INSTAGRAM_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>📷</a>
+            <a href="YOUR_LINKEDIN_URL" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af", fontSize: "24px", textDecoration: "none" }}>🔗</a>
           </div>
         </div>
       </div>
