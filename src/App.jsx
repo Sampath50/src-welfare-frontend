@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom"
 import { useState } from "react"
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
@@ -16,14 +16,18 @@ import SearchBar from './components/SearchBar'
 import WhatsAppButton from './components/WhatsAppButton'
 import ScrollToTop from './components/ScrollToTop'
 
-function App() {
+function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation()
+  
+  // Check if current path is admin (don't show navbar on admin page)
+  const isAdminPage = location.pathname === "/admin"
 
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div style={{ margin: 0, padding: 0, width: "100%" }}>
-        {/* Navigation Bar */}
+    <div style={{ margin: 0, padding: 0, width: "100%" }}>
+      
+      {/* Only show navigation bar if NOT on admin page */}
+      {!isAdminPage && (
         <div style={{ 
           backgroundColor: "#1f2937", 
           padding: "15px 20px",
@@ -35,13 +39,30 @@ function App() {
             alignItems: "center",
             flexWrap: "wrap",
             maxWidth: "1400px",
-            margin: "0 auto"
+            margin: "0 auto",
+            gap: "15px"
           }}>
-            <h2 style={{ color: "white", margin: 0, fontSize: "22px" }}>
-              SRC Welfare Trust
-            </h2>
+            <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
+              <div style={{
+                backgroundColor: "#e74c3c",
+                width: "45px",
+                height: "45px",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "22px",
+                fontWeight: "bold",
+                color: "white"
+              }}>
+                S
+              </div>
+              <div>
+                <div style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>SRC</div>
+                <div style={{ color: "#e74c3c", fontSize: "10px" }}>WELFARE TRUST</div>
+              </div>
+            </Link>
             
-            {/* Desktop Menu */}
             <div style={{ 
               display: "flex", 
               gap: "15px", 
@@ -62,7 +83,6 @@ function App() {
               <SearchBar />
             </div>
 
-            {/* Hamburger Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               style={{
@@ -79,7 +99,6 @@ function App() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
           {menuOpen && (
             <div style={{
               display: "flex",
@@ -103,25 +122,34 @@ function App() {
             </div>
           )}
         </div>
+      )}
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/programs" element={<ProgramsUs />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/volunteer" element={<Volunteer />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/donate" element={<DonateUs />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/programs" element={<ProgramsUs />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/volunteer" element={<Volunteer />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/donate" element={<DonateUs />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
 
-        <Footer />
-        <WhatsAppButton />
-      </div>
+      {/* Only show footer if NOT on admin page */}
+      {!isAdminPage && <Footer />}
+      <WhatsAppButton />
+    </div>
+  )
+}
 
+function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <AppContent />
       <style>{`
         @media (max-width: 768px) {
           .desktop-menu {
