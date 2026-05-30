@@ -17,32 +17,30 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Logo */}
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div style={{
-              backgroundColor: "#e74c3c",
-              width: "45px",
-              height: "45px",
-              borderRadius: "10px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "22px",
-              fontWeight: "bold",
-              color: "white"
-            }}>
-              S
-            </div>
-            <div>
-              <div style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>SRC</div>
-              <div style={{ color: "#e74c3c", fontSize: "10px" }}>WELFARE TRUST</div>
-            </div>
+        {/* Logo and Title */}
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}>
+          <img 
+            src="/favicon.png" 
+            alt="SRC Welfare Trust Logo" 
+            style={{ 
+              height: "45px", 
+              width: "auto",
+              objectFit: "contain"
+            }} 
+          />
+          <div>
+            <div style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>SRC</div>
+            <div style={{ color: "#e74c3c", fontSize: "10px", letterSpacing: "1px" }}>WELFARE TRUST</div>
           </div>
         </Link>
         
-        {/* Menu Links */}
-        <div style={{ display: "flex", gap: "15px", flexWrap: "wrap", alignItems: "center" }}>
+        {/* Desktop Menu */}
+        <div style={{ 
+          display: "flex", 
+          gap: "15px", 
+          flexWrap: "wrap",
+          alignItems: "center"
+        }} className="desktop-menu">
           <Link to="/" style={{ color: "white", textDecoration: "none" }}>Home</Link>
           <Link to="/about" style={{ color: "white", textDecoration: "none" }}>About</Link>
           <Link to="/programs" style={{ color: "white", textDecoration: "none" }}>Programs</Link>
@@ -53,7 +51,6 @@ function Navbar() {
           <Link to="/faq" style={{ color: "white", textDecoration: "none" }}>FAQ</Link>
           <Link to="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</Link>
           <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "5px 12px", borderRadius: "5px" }}>Donate</Link>
-          <Link to="/admin" style={{ color: "white", textDecoration: "none" }}>Admin</Link>
           <SearchBar />
         </div>
       </div>
