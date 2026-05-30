@@ -89,7 +89,7 @@ function Home() {
     <div style={{ margin: 0, padding: 0 }}>
       {/* Hero Section */}
       <div style={{
-        height: "70vh",
+        height: "50vh",
         backgroundImage: "url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200')",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -203,17 +203,16 @@ function Home() {
         </div>
       </div>
 
-      {/* Rest of your sections... */}
-      {/* Impact Numbers Section */}
+      {/* Quick Impact Overview - REDUCED SIZE */}
       <div style={{ padding: "50px 20px", backgroundColor: "#e74c3c", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontSize: "32px", marginBottom: "20px" }}>Quick Impact Overview</h2>
-          <p style={{ fontSize: "16px", marginBottom: "60px", opacity: 0.9 }}>Our reach across communities</p>
+          <h2 style={{ fontSize: "32px", marginBottom: "15px" }}>Quick Impact Overview</h2>
+          <p style={{ fontSize: "16px", marginBottom: "40px", opacity: 0.9 }}>Our reach across communities</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "30px" }}>
             {impactNumbers.map((item, index) => (
               <div key={index}>
                 <div style={{ fontSize: "45px" }}>{item.icon}</div>
-                <h3 style={{ fontSize: "32px", margin: "15px 0 5px", fontWeight: "bold" }}>{item.number}</h3>
+                <h3 style={{ fontSize: "32px", margin: "10px 0 5px", fontWeight: "bold" }}>{item.number}</h3>
                 <p style={{ fontSize: "14px", opacity: 0.9 }}>{item.label}</p>
               </div>
             ))}
@@ -221,20 +220,20 @@ function Home() {
         </div>
       </div>
 
-      {/* Testimonials Section */}
-      <div style={{ padding: "80px 20px", backgroundColor: "#f8f9fa" }}>
+      {/* Testimonials Section - REDUCED SIZE */}
+      <div style={{ padding: "50px 20px", backgroundColor: "#f8f9fa" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h2 style={{ fontSize: "42px", textAlign: "center", marginBottom: "15px" }}>What People Say</h2>
-          <p style={{ textAlign: "center", fontSize: "18px", color: "#666", marginBottom: "60px" }}>Stories of hope and transformation</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
+          <h2 style={{ fontSize: "32px", textAlign: "center", marginBottom: "10px" }}>What People Say</h2>
+          <p style={{ textAlign: "center", fontSize: "16px", color: "#666", marginBottom: "40px" }}>Stories of hope and transformation</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "25px" }}>
             {testimonials.map((testimonial, index) => (
-              <div key={index} style={{ backgroundColor: "white", padding: "30px", borderRadius: "15px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}>
-                <div style={{ fontSize: "40px", marginBottom: "15px" }}>"</div>
-                <p style={{ fontSize: "16px", lineHeight: "1.6", color: "#555", marginBottom: "20px" }}>{testimonial.text}</p>
-                <div style={{ marginTop: "15px" }}>
-                  <h4 style={{ margin: "0", fontSize: "18px" }}>{testimonial.name}</h4>
-                  <p style={{ margin: "5px 0 0", fontSize: "14px", color: "#e74c3c" }}>{testimonial.role}</p>
-                  <div style={{ color: "#f39c12", marginTop: "8px" }}>{"★".repeat(testimonial.rating)}</div>
+              <div key={index} style={{ backgroundColor: "white", padding: "20px", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
+                <div style={{ fontSize: "30px", marginBottom: "10px" }}>"</div>
+                <p style={{ fontSize: "14px", lineHeight: "1.5", color: "#555", marginBottom: "15px" }}>{testimonial.text}</p>
+                <div style={{ marginTop: "10px" }}>
+                  <h4 style={{ margin: "0", fontSize: "16px" }}>{testimonial.name}</h4>
+                  <p style={{ margin: "3px 0 0", fontSize: "12px", color: "#e74c3c" }}>{testimonial.role}</p>
+                  <div style={{ color: "#f39c12", marginTop: "5px", fontSize: "12px" }}>{"★".repeat(testimonial.rating)}</div>
                 </div>
               </div>
             ))}
