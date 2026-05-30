@@ -89,7 +89,7 @@ function Home() {
     <div style={{ margin: 0, padding: 0 }}>
       {/* Hero Section */}
       <div style={{
-        height: "100vh",
+        height: "50vh",
         backgroundImage: "url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200')",
         backgroundSize: "cover",
         backgroundPosition: "center",

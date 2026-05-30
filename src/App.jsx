@@ -20,13 +20,11 @@ function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
   
-  // Check if current path is admin (don't show navbar on admin page)
   const isAdminPage = location.pathname === "/admin"
 
   return (
     <div style={{ margin: 0, padding: 0, width: "100%" }}>
       
-      {/* Only show navigation bar if NOT on admin page */}
       {!isAdminPage && (
         <div style={{ 
           backgroundColor: "#1f2937", 
@@ -79,7 +77,6 @@ function AppContent() {
               <Link to="/faq" style={{ color: "white", textDecoration: "none" }}>FAQ</Link>
               <Link to="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</Link>
               <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "5px 12px", borderRadius: "5px" }}>Donate</Link>
-              <Link to="/admin" style={{ color: "white", textDecoration: "none" }}>Admin</Link>
               <SearchBar />
             </div>
 
@@ -118,7 +115,6 @@ function AppContent() {
               <Link to="/faq" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>FAQ</Link>
               <Link to="/contact" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Contact</Link>
               <Link to="/donate" style={{ color: "white", textDecoration: "none", backgroundColor: "#e74c3c", padding: "8px 12px", borderRadius: "5px", textAlign: "center" }} onClick={() => setMenuOpen(false)}>Donate</Link>
-              <Link to="/admin" style={{ color: "white", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>Admin</Link>
             </div>
           )}
         </div>
@@ -138,7 +134,6 @@ function AppContent() {
         <Route path="/admin" element={<Admin />} />
       </Routes>
 
-      {/* Only show footer if NOT on admin page */}
       {!isAdminPage && <Footer />}
       <WhatsAppButton />
     </div>
