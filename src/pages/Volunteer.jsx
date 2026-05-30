@@ -2,13 +2,7 @@ import { useState } from "react"
 
 function Volunteer() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    age: "",
-    skills: "",
-    availability: "",
-    message: ""
+    name: "", email: "", phone: "", age: "", skills: "", availability: "", message: ""
   })
   const [status, setStatus] = useState("")
 
@@ -16,11 +10,31 @@ function Volunteer() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setStatus("success")
-    setTimeout(() => setStatus(""), 3000)
-    setFormData({ name: "", email: "", phone: "", age: "", skills: "", availability: "", message: "" })
+    setStatus("sending")
+    
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/admin/volunteers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      })
+      
+      const data = await response.json()
+      
+      if (data.success) {
+        setStatus("success")
+        setFormData({ name: "", email: "", phone: "", age: "", skills: "", availability: "", message: "" })
+        setTimeout(() => setStatus(""), 3000)
+      } else {
+        setStatus("error")
+        setTimeout(() => setStatus(""), 3000)
+      }
+    } catch (error) {
+      setStatus("error")
+      setTimeout(() => setStatus(""), 3000)
+    }
   }
 
   const opportunities = [
@@ -38,58 +52,59 @@ function Volunteer() {
       </div>
 
       <div style={{ padding: "60px 20px", maxWidth: "1200px", margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "40px" }}>
+          
           {/* Left Column - Opportunities */}
           <div>
             <h2 style={{ fontSize: "28px", marginBottom: "20px" }}>Volunteer Opportunities</h2>
-            <div style={{ display: "grid", gap: "20px" }}>
-              {opportunities.map((opp, index) => (
-                <div key={index} style={{ backgroundColor: "#f8f9fa", padding: "20px", borderRadius: "10px" }}>
-                  <h3 style={{ margin: "0 0 10px 0", color: "#e74c3c" }}>{opp.title}</h3>
-                  <p style={{ color: "#666", lineHeight: "1.6" }}>{opp.description}</p>
-                  <p style={{ marginTop: "10px", fontSize: "14px", color: "#999" }}>⏰ {opp.time}</p>
-                </div>
-              ))}
-            </div>
+            {opportunities.map((opp, index) => (
+              <div key={index} style={{ backgroundColor: "#f8f9fa", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
+                <h3 style={{ margin: "0 0 10px 0", color: "#e74c3c" }}>{opp.title}</h3>
+                <p style={{ color: "#666", lineHeight: "1.6" }}>{opp.description}</p>
+                <p style={{ marginTop: "10px", fontSize: "14px", color: "#999" }}>⏰ {opp.time}</p>
+              </div>
+            ))}
           </div>
 
           {/* Right Column - Application Form */}
           <div>
             <h2 style={{ fontSize: "28px", marginBottom: "20px" }}>Volunteer Application</h2>
-            {status === "success" && <div style={{ backgroundColor: "#d1fae5", color: "#065f46", padding: "15px", borderRadius: "10px", marginBottom: "20px" }}>✅ Application submitted! We'll contact you soon.</div>}
+            
+            {status === "success" && <div style={{ backgroundColor: "#d1fae5", color: "#065f46", padding: "15px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>✅ Application submitted! We'll contact you soon.</div>}
+            {status === "error" && <div style={{ backgroundColor: "#fee2e2", color: "#991b1b", padding: "15px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>❌ Failed to submit. Please try again.</div>}
+            {status === "sending" && <div style={{ backgroundColor: "#dbeafe", color: "#1e40af", padding: "15px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>📧 Submitting...</div>}
             
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Full Name *</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} required style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "5px" }} />
+                <input type="text" name="name" placeholder="Full Name *" value={formData.name} onChange={handleChange} required style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }} />
               </div>
               <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Email *</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "5px" }} />
+                <input type="email" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }} />
               </div>
               <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Phone *</label>
-                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "5px" }} />
+                <input type="tel" name="phone" placeholder="Phone *" value={formData.phone} onChange={handleChange} required style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }} />
               </div>
               <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Age</label>
-                <input type="number" name="age" value={formData.age} onChange={handleChange} style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "5px" }} />
+                <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }} />
               </div>
               <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Skills/Experience</label>
-                <textarea name="skills" value={formData.skills} onChange={handleChange} rows="3" style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "5px" }}></textarea>
+                <textarea name="skills" placeholder="Skills/Experience" value={formData.skills} onChange={handleChange} rows="3" style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }}></textarea>
               </div>
               <div style={{ marginBottom: "15px" }}>
-                <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Availability</label>
-                <select name="availability" value={formData.availability} onChange={handleChange} style={{ width: "100%", padding: "10px", border: "1px solid #ddd", borderRadius: "5px" }}>
-                  <option value="">Select...</option>
-                  <option value="Weekdays">Weekdays</option>
-                  <option value="Weekends">Weekends</option>
-                  <option value="Evenings">Evenings</option>
-                  <option value="Flexible">Flexible</option>
+                <select name="availability" value={formData.availability} onChange={handleChange} style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }}>
+                  <option value="">Select Availability</option>
+                  <option>Weekdays</option>
+                  <option>Weekends</option>
+                  <option>Evenings</option>
+                  <option>Flexible</option>
                 </select>
               </div>
-              <button type="submit" style={{ width: "100%", backgroundColor: "#e74c3c", color: "white", padding: "12px", border: "none", borderRadius: "5px", fontSize: "16px", cursor: "pointer" }}>Submit Application</button>
+              <div style={{ marginBottom: "20px" }}>
+                <textarea name="message" placeholder="Why do you want to volunteer?" value={formData.message} onChange={handleChange} rows="3" style={{ width: "100%", padding: "12px", border: "1px solid #ddd", borderRadius: "8px" }}></textarea>
+              </div>
+              <button type="submit" disabled={status === "sending"} style={{ width: "100%", backgroundColor: "#e74c3c", color: "white", padding: "14px", border: "none", borderRadius: "8px", fontSize: "16px", cursor: "pointer" }}>
+                {status === "sending" ? "Submitting..." : "Submit Application"}
+              </button>
             </form>
           </div>
         </div>
