@@ -17,13 +17,13 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Logo */}
+        {/* Logo Image */}
         <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <img 
             src="/favicon.png" 
             alt="SRC Welfare Trust Logo" 
             style={{ 
-              height: "45px", 
+              height: "50px", 
               width: "auto",
               objectFit: "contain"
             }} 
