@@ -89,7 +89,7 @@ function Home() {
     <div style={{ margin: 0, padding: 0 }}>
       {/* Hero Section */}
       <div style={{
-        height: "50vh",
+        height: "70vh",
         backgroundImage: "url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200')",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -205,16 +205,16 @@ function Home() {
 
       {/* Rest of your sections... */}
       {/* Impact Numbers Section */}
-      <div style={{ padding: "80px 20px", backgroundColor: "#e74c3c", color: "white" }}>
+      <div style={{ padding: "50px 20px", backgroundColor: "#e74c3c", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>Quick Impact Overview</h2>
-          <p style={{ fontSize: "18px", marginBottom: "60px", opacity: 0.9 }}>Our reach across communities</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "40px" }}>
+          <h2 style={{ fontSize: "32px", marginBottom: "20px" }}>Quick Impact Overview</h2>
+          <p style={{ fontSize: "16px", marginBottom: "60px", opacity: 0.9 }}>Our reach across communities</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "30px" }}>
             {impactNumbers.map((item, index) => (
               <div key={index}>
-                <div style={{ fontSize: "60px" }}>{item.icon}</div>
-                <h3 style={{ fontSize: "44px", margin: "15px 0 5px", fontWeight: "bold" }}>{item.number}</h3>
-                <p style={{ fontSize: "18px", opacity: 0.9 }}>{item.label}</p>
+                <div style={{ fontSize: "45px" }}>{item.icon}</div>
+                <h3 style={{ fontSize: "32px", margin: "15px 0 5px", fontWeight: "bold" }}>{item.number}</h3>
+                <p style={{ fontSize: "14px", opacity: 0.9 }}>{item.label}</p>
               </div>
             ))}
           </div>
