@@ -17,21 +17,17 @@ function Navbar() {
         margin: "0 auto",
         gap: "15px"
       }}>
-        {/* Logo and Title */}
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}>
+        {/* Logo Only - No Text */}
+        <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <img 
             src="/favicon.png" 
             alt="SRC Welfare Trust Logo" 
             style={{ 
-              height: "45px", 
+              height: "50px", 
               width: "auto",
               objectFit: "contain"
             }} 
           />
-          <div>
-            <div style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>SRC</div>
-            <div style={{ color: "#e74c3c", fontSize: "10px", letterSpacing: "1px" }}>WELFARE TRUST</div>
-          </div>
         </Link>
         
         {/* Desktop Menu */}
