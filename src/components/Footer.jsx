@@ -21,7 +21,6 @@ function Footer() {
           <p>Making a difference in lives through education, healthcare, and social welfare programs.</p>
         </div>
         
-        {/* Rest of your footer remains the same */}
         <div>
           <h4>Quick Links</h4>
           <ul style={{ listStyle: "none", padding: 0 }}>
