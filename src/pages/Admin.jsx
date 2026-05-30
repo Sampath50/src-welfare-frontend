@@ -13,6 +13,14 @@ function Admin() {
   const [searchTerm, setSearchTerm] = useState("")
   const [currentAdminPassword, setCurrentAdminPassword] = useState("admin123")
   
+  // Content management states
+  const [heroTitle, setHeroTitle] = useState("")
+  const [heroSubtitle, setHeroSubtitle] = useState("")
+  const [missionTitle, setMissionTitle] = useState("")
+  const [missionText, setMissionText] = useState("")
+  const [stats, setStats] = useState([])
+  const [saveMessage, setSaveMessage] = useState("")
+  
   // Image upload states
   const [selectedFile, setSelectedFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
@@ -25,6 +33,7 @@ function Admin() {
     if (password === currentAdminPassword) {
       setAuthenticated(true)
       fetchAllData()
+      loadContent()
     } else {
       alert("Wrong password!")
     }
@@ -52,6 +61,100 @@ function Admin() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const loadContent = async () => {
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/content/home/all")
+      const data = await response.json()
+      if (data.success && data.contents) {
+        for (let i = 0; i < data.contents.length; i++) {
+          const item = data.contents[i]
+          if (item.section === "hero") {
+            setHeroTitle(item.data.title)
+            setHeroSubtitle(item.data.subtitle)
+          }
+          if (item.section === "stats") {
+            setStats(item.data)
+          }
+          if (item.section === "mission") {
+            setMissionTitle(item.data.title)
+            setMissionText(item.data.text)
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error loading content:", error)
+    }
+  }
+
+  const saveHeroContent = async () => {
+    try {
+      await fetch("https://src-welfare-backend.onrender.com/api/content/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          page: "home",
+          section: "hero",
+          data: { title: heroTitle, subtitle: heroSubtitle }
+        })
+      })
+      setSaveMessage("Hero section saved!")
+      setTimeout(() => setSaveMessage(""), 3000)
+    } catch (error) {
+      alert("Error saving hero content")
+    }
+  }
+
+  const saveMissionContent = async () => {
+    try {
+      await fetch("https://src-welfare-backend.onrender.com/api/content/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          page: "home",
+          section: "mission",
+          data: { title: missionTitle, text: missionText }
+        })
+      })
+      setSaveMessage("Mission section saved!")
+      setTimeout(() => setSaveMessage(""), 3000)
+    } catch (error) {
+      alert("Error saving mission content")
+    }
+  }
+
+  const saveStatsContent = async () => {
+    try {
+      await fetch("https://src-welfare-backend.onrender.com/api/content/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          page: "home",
+          section: "stats",
+          data: stats
+        })
+      })
+      setSaveMessage("Statistics saved!")
+      setTimeout(() => setSaveMessage(""), 3000)
+    } catch (error) {
+      alert("Error saving statistics")
+    }
+  }
+
+  const updateStat = (index, field, value) => {
+    const newStats = [...stats]
+    newStats[index][field] = value
+    setStats(newStats)
+  }
+
+  const addStat = () => {
+    setStats([...stats, { number: "100+", label: "New Stat" }])
+  }
+
+  const removeStat = (index) => {
+    const newStats = stats.filter((_, i) => i !== index)
+    setStats(newStats)
   }
 
   const handleFileSelect = (e) => {
@@ -158,6 +261,7 @@ function Admin() {
         </div>
         
         <button onClick={() => setActiveTab("dashboard")} style={{ backgroundColor: activeTab === "dashboard" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Dashboard</button>
+        <button onClick={() => setActiveTab("content")} style={{ backgroundColor: activeTab === "content" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>📝 Content Manager</button>
         <button onClick={() => setActiveTab("gallery")} style={{ backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Gallery</button>
         <button onClick={() => setActiveTab("messages")} style={{ backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Messages ({messages.length})</button>
         <button onClick={() => setActiveTab("volunteers")} style={{ backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Volunteers ({volunteers.length})</button>
@@ -168,6 +272,12 @@ function Admin() {
 
       {/* Main Content */}
       <div style={{ flex: 1, padding: "30px" }}>
+        
+        {saveMessage && (
+          <div style={{ backgroundColor: "#d1fae5", color: "#065f46", padding: "15px", borderRadius: "10px", marginBottom: "20px" }}>
+            {saveMessage}
+          </div>
+        )}
         
         {/* Dashboard */}
         {activeTab === "dashboard" && (
@@ -190,6 +300,56 @@ function Admin() {
                 <h3>₹{totalDonations}</h3>
                 <p>Donations</p>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Content Manager */}
+        {activeTab === "content" && (
+          <div>
+            <h2>Website Content Manager</h2>
+            <p style={{ color: "#666", marginBottom: "20px" }}>Edit your homepage content. Changes will appear instantly.</p>
+            
+            {/* Hero Section */}
+            <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
+              <h3>Hero Section</h3>
+              <div style={{ marginBottom: "10px" }}>
+                <label>Main Title</label>
+                <input type="text" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }} />
+              </div>
+              <div style={{ marginBottom: "10px" }}>
+                <label>Subtitle</label>
+                <textarea value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} rows="3" style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
+              </div>
+              <button onClick={saveHeroContent} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Save Hero</button>
+            </div>
+
+            {/* Statistics Section */}
+            <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
+              <h3>Statistics Numbers</h3>
+              {stats.map((stat, index) => (
+                <div key={index} style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+                  <input type="text" value={stat.number} onChange={(e) => updateStat(index, "number", e.target.value)} placeholder="Number" style={{ flex: 1, padding: "8px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                  <input type="text" value={stat.label} onChange={(e) => updateStat(index, "label", e.target.value)} placeholder="Label" style={{ flex: 2, padding: "8px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                  <button onClick={() => removeStat(index)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }}>X</button>
+                </div>
+              ))}
+              <button onClick={addStat} style={{ backgroundColor: "#10b981", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer", marginRight: "10px" }}>+ Add Stat</button>
+              <button onClick={saveStatsContent} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Save Stats</button>
+            </div>
+
+            {/* Mission Section */}
+            <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
+              <h3>Mission Section</h3>
+              <div style={{ marginBottom: "10px" }}>
+                <label>Mission Title</label>
+                <input type="text" value={missionTitle} onChange={(e) => setMissionTitle(e.target.value)} style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }} />
+              </div>
+              <div style={{ marginBottom: "10px" }}>
+                <label>Mission Text</label>
+                <textarea value={missionText} onChange={(e) => setMissionText(e.target.value)} rows="4" style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
+              </div>
+              <button onClick={saveMissionContent} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Save Mission</button>
             </div>
           </div>
         )}
