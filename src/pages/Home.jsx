@@ -4,10 +4,37 @@ function Home() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
   const [status, setStatus] = useState("")
   const [animate, setAnimate] = useState(false)
+  const [content, setContent] = useState({
+    hero: { title: "SRC Welfare Trust", subtitle: "Together we can support education, healthcare, food drives, and social welfare programs." },
+    stats: [{ number: "500+", label: "Families Helped" }, { number: "1200+", label: "Students Supported" }, { number: "50+", label: "Medical Camps" }, { number: "100+", label: "Volunteers" }],
+    mission: { title: "Our Mission", text: "To empower underserved communities through education, healthcare, and social welfare programs." }
+  })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setAnimate(true)
+    fetchContent()
   }, [])
+
+  const fetchContent = async () => {
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/content/home/all")
+      const data = await response.json()
+      if (data.success && data.contents) {
+        const newContent = { ...content }
+        data.contents.forEach(item => {
+          if (item.section === "hero") newContent.hero = item.data
+          if (item.section === "stats") newContent.stats = item.data
+          if (item.section === "mission") newContent.mission = item.data
+        })
+        setContent(newContent)
+      }
+    } catch (error) {
+      console.error("Error fetching content:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -40,13 +67,7 @@ function Home() {
     }
   }
 
-  const stats = [
-    { number: "500+", label: "Families Helped", icon: "👨‍👩‍👧‍👦", description: "Provided food, shelter, and support" },
-    { number: "1200+", label: "Students Supported", icon: "📚", description: "Scholarships and school supplies" },
-    { number: "50+", label: "Medical Camps", icon: "🏥", description: "Free health checkups and medicines" },
-    { number: "100+", label: "Volunteers", icon: "🤝", description: "Dedicated change-makers" }
-  ]
-
+  const stats = content.stats
   const impactNumbers = [
     { number: "10+", label: "Villages Covered", icon: "🏘️" },
     { number: "25+", label: "Events Organized", icon: "🎉" },
@@ -59,6 +80,10 @@ function Home() {
     { name: "Priya Sharma", role: "Volunteer", text: "Working with this organization has been life-changing. Their dedication is inspiring.", rating: 5 },
     { name: "Dr. Suresh Reddy", role: "Partner", text: "Their medical camps have brought healthcare to remote villages.", rating: 5 }
   ]
+
+  if (loading) {
+    return <div style={{ textAlign: "center", padding: "100px" }}>Loading...</div>
+  }
 
   return (
     <div style={{ margin: 0, padding: 0 }}>
@@ -84,9 +109,9 @@ function Home() {
         }}></div>
         
         <div style={{ position: "relative", textAlign: "center", color: "white", padding: "20px", animation: animate ? "fadeInUp 1s ease-out" : "none" }}>
-          <h1 style={{ fontSize: "65px", marginBottom: "20px", fontWeight: "bold" }}>SRC Welfare Trust</h1>
+          <h1 style={{ fontSize: "65px", marginBottom: "20px", fontWeight: "bold" }}>{content.hero.title}</h1>
           <p style={{ fontSize: "24px", maxWidth: "700px", margin: "0 auto", lineHeight: "1.4" }}>
-            Together we can support education, healthcare, food drives, and social welfare programs.
+            {content.hero.subtitle}
           </p>
           <div style={{ marginTop: "40px", display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
             <a href="/donate">
@@ -143,10 +168,8 @@ function Home() {
               }}
               onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"}
               onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
-                <div style={{ fontSize: "55px" }}>{stat.icon}</div>
                 <h2 style={{ fontSize: "52px", color: "#e74c3c", margin: "15px 0 5px 0", fontWeight: "bold" }}>{stat.number}</h2>
                 <h3 style={{ fontSize: "22px", margin: "10px 0" }}>{stat.label}</h3>
-                <p style={{ fontSize: "14px", color: "#888", marginTop: "10px" }}>{stat.description}</p>
               </div>
             ))}
           </div>
@@ -156,9 +179,9 @@ function Home() {
       {/* Mission Section */}
       <div style={{ padding: "80px 20px", backgroundColor: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>Our Mission & Vision</h2>
+          <h2 style={{ fontSize: "42px", marginBottom: "20px" }}>{content.mission.title}</h2>
           <p style={{ fontSize: "20px", color: "#555", maxWidth: "800px", margin: "0 auto 60px", lineHeight: "1.6" }}>
-            To empower underserved communities through education, healthcare, and social welfare programs.
+            {content.mission.text}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "40px", marginTop: "40px" }}>
             <div style={{ padding: "30px", backgroundColor: "#f8f9fa", borderRadius: "15px" }}>
@@ -180,6 +203,7 @@ function Home() {
         </div>
       </div>
 
+      {/* Rest of your sections... */}
       {/* Impact Numbers Section */}
       <div style={{ padding: "80px 20px", backgroundColor: "#e74c3c", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
