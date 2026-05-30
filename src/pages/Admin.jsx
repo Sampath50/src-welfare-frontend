@@ -118,33 +118,146 @@ function Admin() {
   }
 
   return (
-    <div style={{ backgroundColor: "#f3f4f6", minHeight: "100vh" }}>
-      {/* Admin Navbar */}
-      <div style={{ backgroundColor: "#1f2937", color: "white", padding: "15px 20px", display: "flex", gap: "20px", flexWrap: "wrap" }}>
-        <button onClick={() => setActiveTab("messages")} style={{ backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>📧 Messages ({messages.length})</button>
-        <button onClick={() => setActiveTab("volunteers")} style={{ backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>🤝 Volunteers ({volunteers.length})</button>
-        <button onClick={() => setActiveTab("gallery")} style={{ backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>🖼️ Gallery ({gallery.length})</button>
-        <button onClick={() => setActiveTab("donations")} style={{ backgroundColor: activeTab === "donations" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>💰 Donations ({donations.reduce((sum, d) => sum + d.amount, 0)} ₹)</button>
-        <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer", marginLeft: "auto" }}>Logout</button>
+    <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f3f4f6" }}>
+      
+      {/* Vertical Sidebar */}
+      <div style={{ 
+        width: "280px", 
+        backgroundColor: "#1f2937", 
+        color: "white",
+        padding: "20px 0",
+        display: "flex",
+        flexDirection: "column",
+        position: "sticky",
+        top: 0,
+        height: "100vh"
+      }}>
+        <div style={{ padding: "0 20px 20px 20px", borderBottom: "1px solid #374151", marginBottom: "20px" }}>
+          <h2 style={{ margin: 0 }}>Admin Panel</h2>
+          <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "5px" }}>SRC Welfare Trust</p>
+        </div>
+        
+        <button 
+          onClick={() => setActiveTab("messages")} 
+          style={{ 
+            backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent",
+            color: "white",
+            border: "none",
+            padding: "12px 20px",
+            textAlign: "left",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            fontSize: "14px",
+            margin: "2px 10px",
+            borderRadius: "8px"
+          }}
+        >
+          📧 Messages ({messages.length})
+        </button>
+        
+        <button 
+          onClick={() => setActiveTab("volunteers")} 
+          style={{ 
+            backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent",
+            color: "white",
+            border: "none",
+            padding: "12px 20px",
+            textAlign: "left",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            fontSize: "14px",
+            margin: "2px 10px",
+            borderRadius: "8px"
+          }}
+        >
+          🤝 Volunteers ({volunteers.length})
+        </button>
+        
+        <button 
+          onClick={() => setActiveTab("gallery")} 
+          style={{ 
+            backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent",
+            color: "white",
+            border: "none",
+            padding: "12px 20px",
+            textAlign: "left",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            fontSize: "14px",
+            margin: "2px 10px",
+            borderRadius: "8px"
+          }}
+        >
+          🖼️ Gallery ({gallery.length})
+        </button>
+        
+        <button 
+          onClick={() => setActiveTab("donations")} 
+          style={{ 
+            backgroundColor: activeTab === "donations" ? "#e74c3c" : "transparent",
+            color: "white",
+            border: "none",
+            padding: "12px 20px",
+            textAlign: "left",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            fontSize: "14px",
+            margin: "2px 10px",
+            borderRadius: "8px"
+          }}
+        >
+          💰 Donations ({donations.reduce((sum, d) => sum + d.amount, 0)} ₹)
+        </button>
+        
+        <div style={{ flex: 1 }}></div>
+        
+        <button 
+          onClick={() => setAuthenticated(false)} 
+          style={{ 
+            backgroundColor: "#dc2626",
+            color: "white",
+            border: "none",
+            padding: "12px 20px",
+            textAlign: "left",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            fontSize: "14px",
+            margin: "10px",
+            borderRadius: "8px"
+          }}
+        >
+          🚪 Logout
+        </button>
       </div>
 
-      <div style={{ padding: "30px 20px", maxWidth: "1400px", margin: "0 auto" }}>
+      {/* Main Content Area */}
+      <div style={{ flex: 1, padding: "30px", overflowX: "auto" }}>
         
         {/* Messages Tab */}
         {activeTab === "messages" && (
           <div>
-            <h2>Contact Messages</h2>
+            <h2 style={{ marginTop: 0 }}>Contact Messages</h2>
             {loading ? <p>Loading...</p> : messages.length === 0 ? <p>No messages yet.</p> : (
               messages.map(msg => (
-                <div key={msg._id} style={{ backgroundColor: "white", padding: "20px", marginBottom: "20px", borderRadius: "10px" }}>
+                <div key={msg._id} style={{ backgroundColor: "white", padding: "20px", marginBottom: "20px", borderRadius: "10px", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div>
-                      <h3>{msg.name}</h3>
-                      <p>📧 {msg.email}</p>
-                      <p>{msg.message}</p>
-                      <p style={{ fontSize: "12px", color: "#999" }}>{new Date(msg.createdAt).toLocaleString()}</p>
+                      <h3 style={{ margin: "0 0 10px 0" }}>{msg.name}</h3>
+                      <p style={{ margin: "5px 0" }}>📧 {msg.email}</p>
+                      <p style={{ margin: "10px 0" }}>{msg.message}</p>
+                      <p style={{ fontSize: "12px", color: "#999", margin: "10px 0 0 0" }}>{new Date(msg.createdAt).toLocaleString()}</p>
                     </div>
-                    <button onClick={() => deleteMessage(msg._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
+                    <button onClick={() => deleteMessage(msg._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer", height: "40px" }}>Delete</button>
                   </div>
                 </div>
               ))
@@ -155,13 +268,13 @@ function Admin() {
         {/* Volunteers Tab */}
         {activeTab === "volunteers" && (
           <div>
-            <h2>Volunteer Applications</h2>
+            <h2 style={{ marginTop: 0 }}>Volunteer Applications</h2>
             {loading ? <p>Loading...</p> : volunteers.length === 0 ? <p>No volunteer applications yet.</p> : (
               volunteers.map(vol => (
-                <div key={vol._id} style={{ backgroundColor: "white", padding: "20px", marginBottom: "20px", borderRadius: "10px" }}>
+                <div key={vol._id} style={{ backgroundColor: "white", padding: "20px", marginBottom: "20px", borderRadius: "10px", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
                     <div>
-                      <h3>{vol.name}</h3>
+                      <h3 style={{ margin: "0 0 10px 0" }}>{vol.name}</h3>
                       <p>📧 {vol.email}</p>
                       <p>📞 {vol.phone}</p>
                       {vol.age && <p>Age: {vol.age}</p>}
@@ -186,7 +299,7 @@ function Admin() {
         {/* Gallery Tab */}
         {activeTab === "gallery" && (
           <div>
-            <h2>Gallery Management</h2>
+            <h2 style={{ marginTop: 0 }}>Gallery Management</h2>
             
             {/* Add Image Form */}
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
@@ -212,8 +325,8 @@ function Admin() {
                   <div key={img._id} style={{ backgroundColor: "white", borderRadius: "10px", overflow: "hidden", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
                     <img src={img.imageUrl} alt={img.title} style={{ width: "100%", height: "180px", objectFit: "cover" }} />
                     <div style={{ padding: "15px" }}>
-                      <h4>{img.title}</h4>
-                      <p style={{ fontSize: "12px", color: "#666" }}>{img.category}</p>
+                      <h4 style={{ margin: "0 0 5px 0" }}>{img.title}</h4>
+                      <p style={{ fontSize: "12px", color: "#666", margin: "0 0 10px 0" }}>{img.category}</p>
                       <button onClick={() => deleteGalleryImage(img._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "8px", borderRadius: "5px", cursor: "pointer", width: "100%" }}>Delete</button>
                     </div>
                   </div>
@@ -226,17 +339,17 @@ function Admin() {
         {/* Donations Tab */}
         {activeTab === "donations" && (
           <div>
-            <h2>Donations</h2>
+            <h2 style={{ marginTop: 0 }}>Donations</h2>
             {loading ? <p>Loading...</p> : donations.length === 0 ? <p>No donations yet.</p> : (
               <>
                 <div style={{ backgroundColor: "#e74c3c", color: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>
-                  <h3>Total Donations: ₹{donations.reduce((sum, d) => sum + d.amount, 0)}</h3>
-                  <p>From {donations.length} donors</p>
+                  <h3 style={{ margin: 0 }}>Total Donations: ₹{donations.reduce((sum, d) => sum + d.amount, 0)}</h3>
+                  <p style={{ margin: "5px 0 0 0" }}>From {donations.length} donors</p>
                 </div>
                 {donations.map(don => (
                   <div key={don._id} style={{ backgroundColor: "white", padding: "20px", marginBottom: "20px", borderRadius: "10px" }}>
                     <div>
-                      <h3>{don.name}</h3>
+                      <h3 style={{ margin: "0 0 10px 0" }}>{don.name}</h3>
                       <p>📧 {don.email}</p>
                       <p>💰 Amount: ₹{don.amount}</p>
                       <p>🆔 Payment ID: {don.paymentId || "N/A"}</p>
