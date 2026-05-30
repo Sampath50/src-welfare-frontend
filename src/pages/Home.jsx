@@ -204,7 +204,7 @@ function Home() {
       </div>
 
       {/* Quick Impact Overview - REDUCED SIZE */}
-      <div style={{ padding: "50px 20px", backgroundColor: "#e74c3c", color: "white" }}>
+      <div style={{ padding: "50px 20px", backgroundColor: "#2197db", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontSize: "32px", marginBottom: "15px" }}>Quick Impact Overview</h2>
           <p style={{ fontSize: "16px", marginBottom: "40px", opacity: 0.9 }}>Our reach across communities</p>
