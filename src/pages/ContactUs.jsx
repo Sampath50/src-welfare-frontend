@@ -68,7 +68,7 @@ function ContactUs() {
               <div>
                 <h3 style={{ margin: "0 0 5px 0", fontSize: "18px" }}>Phone</h3>
                 <p style={{ margin: 0, color: "#666" }}>
-                  +91 9392302450
+                  +91 8284898542
                 </p>
               </div>
             </div>

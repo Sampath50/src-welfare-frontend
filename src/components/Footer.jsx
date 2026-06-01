@@ -40,7 +40,7 @@ function Footer() {
         <div>
           <h4>Contact Info</h4>
           <p>📍 D.No.1-1-27/2 Plot No-2 3rd floor Kapra, Hyderabad, Telangana</p>
-          <p>📞 9392302450</p>
+          <p>📞 +91 8184898542</p>
           <p>📧 srcwelfare@info.com</p>
         </div>
         
