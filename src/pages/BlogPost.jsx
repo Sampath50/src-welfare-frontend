@@ -6,7 +6,7 @@ function BlogPost() {
   const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Sample blog posts data
+  // Complete blog posts data
   const blogPosts = {
     1: {
       id: 1,
@@ -88,12 +88,73 @@ function BlogPost() {
         <h3>Future Plans</h3>
         <p>We aim to support 200 students next year. Your continued support can make this possible.</p>
       `
+    },
+    4: {
+      id: 4,
+      title: "Winter Clothing Drive Success",
+      date: "February 20, 2024",
+      category: "Community",
+      author: "Meera",
+      readTime: "3 min read",
+      image: "https://images.unsplash.com/photo-1518176258769-f227c798150e?w=800",
+      fullContent: `
+        <p>This winter, our team successfully distributed over 1000 warm clothes to families in need across 10 villages. The harsh winter conditions made this initiative crucial for many underprivileged families who couldn't afford proper winter clothing.</p>
+        
+        <h3>Distribution Details</h3>
+        <ul>
+          <li>1000+ warm clothes including jackets, sweaters, blankets, and woolen caps</li>
+          <li>10 villages covered in remote areas</li>
+          <li>500+ families benefited from the drive</li>
+          <li>Special focus on elderly people and young children</li>
+        </ul>
+        
+        <h3>Community Response</h3>
+        <p>The joy on the faces of the recipients was overwhelming. Many elderly people expressed their gratitude, saying this was the first time they received such help during winter.</p>
+        
+        <h3>Volunteer Participation</h3>
+        <p>Over 50 volunteers helped in collecting, sorting, and distributing the clothes. Local businesses also contributed by donating new blankets and jackets.</p>
+        
+        <h3>Next Steps</h3>
+        <p>We plan to make this an annual event and aim to reach 2000+ families next winter. Your donations and support can help us achieve this goal.</p>
+      `
+    },
+    5: {
+      id: 5,
+      title: "Women Empowerment Workshop",
+      date: "February 15, 2024",
+      category: "Women Empowerment",
+      author: "Lakshmi",
+      readTime: "5 min read",
+      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800",
+      fullContent: `
+        <p>Our 5-day Women Empowerment Workshop was a resounding success, training 50 women in tailoring and small business management skills. The workshop aimed to provide sustainable livelihood opportunities for women from economically weaker sections.</p>
+        
+        <h3>Workshop Modules</h3>
+        <ul>
+          <li>Tailoring and embroidery techniques (basic to advanced)</li>
+          <li>Small business management and accounting</li>
+          <li>Marketing and customer relations</li>
+          <li>Financial literacy and savings</li>
+          <li>Leadership and confidence building</li>
+        </ul>
+        
+        <h3>Trainers and Mentors</h3>
+        <p>We had 5 expert trainers from the field of textile design and 3 business mentors who guided the participants on how to start their own small tailoring businesses.</p>
+        
+        <h3>Success Stories</h3>
+        <p>Already, 15 women have started their own small tailoring businesses from their homes. 20 more have formed a cooperative to take bulk orders from local businesses.</p>
+        
+        <h3>Equipment Provided</h3>
+        <p>Each participant received a sewing machine and a starter kit of tailoring supplies to help them begin their journey.</p>
+        
+        <h3>Future Plans</h3>
+        <p>We plan to conduct advanced workshops and help these women connect with larger markets. We also aim to train 200 more women in the next year.</p>
+      `
     }
   }
 
   useEffect(() => {
     setLoading(true)
-    // Simulate loading
     setTimeout(() => {
       setPost(blogPosts[id])
       setLoading(false)
