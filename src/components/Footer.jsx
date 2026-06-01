@@ -34,7 +34,6 @@ function Footer() {
             <li><Link to="/faq" style={{ color: "#9ca3af", textDecoration: "none" }}>FAQ</Link></li>
             <li><Link to="/contact" style={{ color: "#9ca3af", textDecoration: "none" }}>Contact</Link></li>
             <li><Link to="/donate" style={{ color: "#9ca3af", textDecoration: "none" }}>Donate</Link></li>
-            <li><Link to="/admin" style={{ color: "#9ca3af", textDecoration: "none" }}>Admin</Link></li>
           </ul>
         </div>
         
