@@ -55,6 +55,33 @@ function Admin() {
   const [teamImagePreview, setTeamImagePreview] = useState(null)
   const [teamUploading, setTeamUploading] = useState(false)
 
+  // Exchange rates (1 unit of foreign currency to INR)
+  const getINRAmount = (donation) => {
+    const amount = donation.amount
+    const currency = donation.currency || "INR"
+    
+    if (currency === "INR") return amount
+    if (currency === "USD") return Math.round(amount * 83.5)
+    if (currency === "EUR") return Math.round(amount * 90)
+    if (currency === "GBP") return Math.round(amount * 105)
+    if (currency === "AED") return Math.round(amount * 22.7)
+    if (currency === "CAD") return Math.round(amount * 61)
+    if (currency === "AUD") return Math.round(amount * 55)
+    if (currency === "SGD") return Math.round(amount * 62)
+    return amount
+  }
+
+  const getCurrencySymbol = (currency) => {
+    if (currency === "USD") return "$"
+    if (currency === "EUR") return "€"
+    if (currency === "GBP") return "£"
+    if (currency === "AED") return "د.إ"
+    if (currency === "CAD") return "C$"
+    if (currency === "AUD") return "A$"
+    if (currency === "SGD") return "S$"
+    return "₹"
+  }
+
   const handleLogin = (e) => {
     e.preventDefault()
     if (username === "admin" && password === currentAdminPassword) {
@@ -631,7 +658,7 @@ function Admin() {
     return name.toLowerCase().includes(term) || email.toLowerCase().includes(term)
   })
 
-  const totalDonations = donations.reduce((sum, d) => sum + (d.amount || 0), 0)
+  const totalINR = donations.reduce((sum, d) => sum + getINRAmount(d), 0)
   const pendingVolunteers = volunteers.filter((v) => v.status === "pending").length
 
   if (!authenticated) {
@@ -698,7 +725,7 @@ function Admin() {
               <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{messages.length}</h3><p>Messages</p></div>
               <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{volunteers.length}</h3><p>Volunteers</p></div>
               <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{pendingVolunteers}</h3><p>Pending</p></div>
-              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>₹{totalDonations}</h3><p>Donations</p></div>
+              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>₹{totalINR.toLocaleString('en-IN')}</h3><p>Donations</p></div>
             </div>
           </div>
         )}
@@ -797,7 +824,7 @@ function Admin() {
           </div>
         )}
 
-        {/* Donations - Updated with Currency Display */}
+        {/* Donations - Updated with correct INR conversion */}
         {activeTab === "donations" && (
           <div>
             <h2>Donations</h2>
@@ -806,35 +833,23 @@ function Admin() {
             ) : (
               <div>
                 <div style={{ backgroundColor: "#e74c3c", color: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>
-                  <h3>Total: ₹{totalDonations}</h3>
+                  <h3>Total: ₹{totalINR.toLocaleString('en-IN')}</h3>
                   <p>From {donations.length} donors</p>
                 </div>
-                {donations.map((don) => {
-                  const getCurrencySymbol = () => {
-                    if (don.currency === "USD") return "$"
-                    if (don.currency === "EUR") return "€"
-                    if (don.currency === "GBP") return "£"
-                    if (don.currency === "AED") return "د.إ"
-                    if (don.currency === "CAD") return "C$"
-                    if (don.currency === "AUD") return "A$"
-                    if (don.currency === "SGD") return "S$"
-                    return "₹"
-                  }
-                  return (
-                    <div key={don._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
-                      <h4 style={{ margin: "0 0 5px 0" }}>{don.name}</h4>
-                      <p style={{ margin: "5px 0" }}>📧 {don.email}</p>
-                      <p style={{ margin: "5px 0" }}>
-                        💰 Amount: {getCurrencySymbol()}{don.amount}
-                        <span style={{ fontSize: "12px", color: "#666", marginLeft: "10px" }}>
-                          ({don.currency || "INR"})
-                        </span>
-                      </p>
-                      <p style={{ margin: "5px 0" }}>🆔 Payment ID: {don.paymentId || "N/A"}</p>
-                      <small>{new Date(don.createdAt).toLocaleString()}</small>
-                    </div>
-                  )
-                })}
+                {donations.map((don) => (
+                  <div key={don._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
+                    <h4 style={{ margin: "0 0 5px 0" }}>{don.name}</h4>
+                    <p style={{ margin: "5px 0" }}>📧 {don.email}</p>
+                    <p style={{ margin: "5px 0" }}>
+                      💰 Amount: {getCurrencySymbol(don.currency)}{don.amount} ({don.currency || "INR"})
+                      <span style={{ fontSize: "12px", color: "#666", marginLeft: "10px" }}>
+                        ≈ ₹{getINRAmount(don).toLocaleString('en-IN')}
+                      </span>
+                    </p>
+                    <p style={{ margin: "5px 0" }}>🆔 Payment ID: {don.paymentId || "N/A"}</p>
+                    <small>{new Date(don.createdAt).toLocaleString()}</small>
+                  </div>
+                ))}
               </div>
             )}
           </div>
