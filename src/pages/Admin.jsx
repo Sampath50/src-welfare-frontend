@@ -15,6 +15,10 @@ function Admin() {
   const [searchTerm, setSearchTerm] = useState("")
   const [currentAdminPassword, setCurrentAdminPassword] = useState("admin123")
   
+  // Edit modal states
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [editingMember, setEditingMember] = useState(null)
+  
   // Content management states
   const [heroTitle, setHeroTitle] = useState("")
   const [heroSubtitle, setHeroSubtitle] = useState("")
@@ -149,6 +153,44 @@ function Admin() {
     if (window.confirm("Delete this team member?")) {
       await fetch(`https://src-welfare-backend.onrender.com/api/admin/team/${id}`, { method: "DELETE" })
       fetchTeam()
+    }
+  }
+
+  const openEditModal = (member) => {
+    setEditingMember(member)
+    setEditModalOpen(true)
+  }
+
+  const updateTeamMember = async () => {
+    const updatedMember = {
+      name: document.getElementById("editName").value,
+      role: document.getElementById("editRole").value,
+      bio: document.getElementById("editBio").value,
+      imageUrl: document.getElementById("editImage").value,
+      email: document.getElementById("editEmail").value,
+      phone: document.getElementById("editPhone").value,
+      order: parseInt(document.getElementById("editOrder").value) || 0
+    }
+    
+    if (!updatedMember.name || !updatedMember.role) {
+      alert("Name and Role are required!")
+      return
+    }
+    
+    try {
+      const response = await fetch(`https://src-welfare-backend.onrender.com/api/admin/team/${editingMember._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedMember)
+      })
+      const data = await response.json()
+      if (data.success) {
+        alert("Team member updated!")
+        setEditModalOpen(false)
+        fetchTeam()
+      }
+    } catch (error) {
+      alert("Error updating team member")
     }
   }
 
@@ -378,40 +420,18 @@ function Admin() {
         
         {/* Navigation Menu */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
-          <button onClick={() => setActiveTab("dashboard")} style={{ backgroundColor: activeTab === "dashboard" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>📊</span> Dashboard
-          </button>
-          
-          <button onClick={() => setActiveTab("content")} style={{ backgroundColor: activeTab === "content" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>📝</span> Content Manager
-          </button>
-          
-          <button onClick={() => setActiveTab("gallery")} style={{ backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>🖼️</span> Gallery
-          </button>
-          
-          <button onClick={() => setActiveTab("messages")} style={{ backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>📧</span> Messages ({messages.length})
-          </button>
-          
-          <button onClick={() => setActiveTab("volunteers")} style={{ backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>🤝</span> Volunteers ({volunteers.length})
-          </button>
-          
-          <button onClick={() => setActiveTab("donations")} style={{ backgroundColor: activeTab === "donations" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>💰</span> Donations
-          </button>
-          
-          <button onClick={() => setActiveTab("team")} style={{ backgroundColor: activeTab === "team" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>👥</span> Team Members
-          </button>
+          <button onClick={() => setActiveTab("dashboard")} style={{ backgroundColor: activeTab === "dashboard" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>📊</span> Dashboard</button>
+          <button onClick={() => setActiveTab("content")} style={{ backgroundColor: activeTab === "content" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>📝</span> Content Manager</button>
+          <button onClick={() => setActiveTab("gallery")} style={{ backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>🖼️</span> Gallery</button>
+          <button onClick={() => setActiveTab("messages")} style={{ backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>📧</span> Messages ({messages.length})</button>
+          <button onClick={() => setActiveTab("volunteers")} style={{ backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>🤝</span> Volunteers ({volunteers.length})</button>
+          <button onClick={() => setActiveTab("donations")} style={{ backgroundColor: activeTab === "donations" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>💰</span> Donations</button>
+          <button onClick={() => setActiveTab("team")} style={{ backgroundColor: activeTab === "team" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>👥</span> Team Members</button>
         </div>
         
         {/* Logout Button at Bottom */}
         <div style={{ padding: "20px 12px 0 12px", borderTop: "1px solid #374151", marginTop: "20px" }}>
-          <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "12px 20px", width: "100%", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
-            <span style={{ fontSize: "18px" }}>🚪</span> Logout
-          </button>
+          <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "12px 20px", width: "100%", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>🚪</span> Logout</button>
         </div>
       </div>
 
@@ -555,11 +575,12 @@ function Admin() {
           </div>
         )}
 
-        {/* Team Members */}
+        {/* Team Members with Edit */}
         {activeTab === "team" && (
           <div>
             <h2>Team Members Management</h2>
             
+            {/* Add Team Member Form */}
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
               <h3>Add New Team Member</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
@@ -588,8 +609,9 @@ function Admin() {
               </div>
             </div>
 
+            {/* Team Members List with Edit Button */}
             <h3>Current Team Members ({team.length})</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "20px", marginTop: "20px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))", gap: "20px", marginTop: "20px" }}>
               {team.map((member) => (
                 <div key={member._id} style={{ backgroundColor: "white", padding: "15px", borderRadius: "10px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
                   <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
@@ -599,11 +621,56 @@ function Admin() {
                       <p style={{ color: "#e74c3c", margin: 0 }}>{member.role}</p>
                       {member.bio && <p style={{ fontSize: "13px", color: "#666", margin: 0 }}>{member.bio}</p>}
                     </div>
-                    <button onClick={() => deleteTeamMember(member._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <button onClick={() => openEditModal(member)} style={{ backgroundColor: "#f59e0b", color: "white", border: "none", padding: "6px 12px", borderRadius: "5px", cursor: "pointer" }}>✏️ Edit</button>
+                      <button onClick={() => deleteTeamMember(member._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "6px 12px", borderRadius: "5px", cursor: "pointer" }}>🗑️ Delete</button>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+
+            {/* Edit Modal */}
+            {editModalOpen && (
+              <div style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: "rgba(0,0,0,0.5)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 1000
+              }} onClick={() => setEditModalOpen(false)}>
+                <div style={{
+                  backgroundColor: "white",
+                  padding: "25px",
+                  borderRadius: "10px",
+                  width: "500px",
+                  maxWidth: "90%",
+                  maxHeight: "80vh",
+                  overflow: "auto"
+                }} onClick={(e) => e.stopPropagation()}>
+                  <h3>Edit Team Member</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "15px", marginTop: "20px" }}>
+                    <input type="text" id="editName" placeholder="Full Name" defaultValue={editingMember?.name} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                    <input type="text" id="editRole" placeholder="Role" defaultValue={editingMember?.role} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                    <textarea id="editBio" placeholder="Short Bio" rows="3" defaultValue={editingMember?.bio} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
+                    <input type="text" id="editImage" placeholder="Image URL" defaultValue={editingMember?.imageUrl} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                    <input type="email" id="editEmail" placeholder="Email" defaultValue={editingMember?.email} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                    <input type="text" id="editPhone" placeholder="Phone" defaultValue={editingMember?.phone} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                    <input type="number" id="editOrder" placeholder="Display Order" defaultValue={editingMember?.order} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                    
+                    <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                      <button onClick={updateTeamMember} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Save Changes</button>
+                      <button onClick={() => setEditModalOpen(false)} style={{ backgroundColor: "#666", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
