@@ -4,13 +4,15 @@ function Home() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
   const [status, setStatus] = useState("")
   const [animate, setAnimate] = useState(false)
+  
+  // Default content - shows immediately (no loading)
   const [content, setContent] = useState({
     hero: { title: "SRC Welfare Trust", subtitle: "Together we can support education, healthcare, food drives, and social welfare programs." },
     stats: [{ number: "500+", label: "Families Helped" }, { number: "1200+", label: "Students Supported" }, { number: "50+", label: "Medical Camps" }, { number: "100+", label: "Volunteers" }],
     mission: { title: "Our Mission", text: "To empower underserved communities through education, healthcare, and social welfare programs." }
   })
   const [testimonials, setTestimonials] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [contentLoaded, setContentLoaded] = useState(false)
 
   useEffect(() => {
     setAnimate(true)
@@ -33,6 +35,8 @@ function Home() {
       }
     } catch (error) {
       console.error("Error fetching content:", error)
+    } finally {
+      setContentLoaded(true)
     }
   }
 
@@ -45,8 +49,6 @@ function Home() {
       }
     } catch (error) {
       console.error("Error fetching testimonials:", error)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -89,10 +91,6 @@ function Home() {
     { number: "200+", label: "Active Donors", icon: "❤️" }
   ]
 
-  if (loading) {
-    return <div style={{ textAlign: "center", padding: "100px" }}>Loading...</div>
-  }
-
   return (
     <div style={{ margin: 0, padding: 0 }}>
       {/* Hero Section */}
@@ -115,7 +113,7 @@ function Home() {
           backgroundColor: "rgba(0,0,0,0.55)"
         }}></div>
         
-        <div style={{ position: "relative", textAlign: "center", color: "white", padding: "20px", maxWidth: "800px" }}>
+        <div style={{ position: "relative", textAlign: "center", color: "white", padding: "20px", maxWidth: "800px", animation: animate ? "fadeInUp 0.6s ease-out" : "none" }}>
           <h1 style={{ fontSize: "52px", marginBottom: "20px", fontWeight: "700" }}>{content.hero.title}</h1>
           <p style={{ fontSize: "20px", marginBottom: "30px", lineHeight: "1.5", opacity: 0.95 }}>
             {content.hero.subtitle}
@@ -176,8 +174,11 @@ function Home() {
                 backgroundColor: "white", 
                 padding: "30px 20px", 
                 borderRadius: "12px",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
-              }}>
+                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                transition: "transform 0.3s"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+              onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
                 <h2 style={{ fontSize: "44px", color: "#dc2626", margin: "0", fontWeight: "700" }}>{stat.number}</h2>
                 <p style={{ fontSize: "16px", color: "#4b5563", marginTop: "10px" }}>{stat.label}</p>
               </div>
@@ -194,17 +195,17 @@ function Home() {
             {content.mission.text}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "30px" }}>
-            <div style={{ padding: "25px", backgroundColor: "#f9fafb", borderRadius: "12px" }}>
+            <div style={{ padding: "25px", backgroundColor: "#f9fafb", borderRadius: "12px", transition: "transform 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
               <div style={{ fontSize: "45px", marginBottom: "15px" }}>🎯</div>
               <h3 style={{ fontSize: "22px", marginBottom: "10px", fontWeight: "600" }}>Our Vision</h3>
               <p style={{ fontSize: "15px", color: "#6b7280", lineHeight: "1.5" }}>A world with equal opportunities for all</p>
             </div>
-            <div style={{ padding: "25px", backgroundColor: "#f9fafb", borderRadius: "12px" }}>
+            <div style={{ padding: "25px", backgroundColor: "#f9fafb", borderRadius: "12px", transition: "transform 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
               <div style={{ fontSize: "45px", marginBottom: "15px" }}>💪</div>
               <h3 style={{ fontSize: "22px", marginBottom: "10px", fontWeight: "600" }}>Our Impact</h3>
               <p style={{ fontSize: "15px", color: "#6b7280", lineHeight: "1.5" }}>Transforming lives through action</p>
             </div>
-            <div style={{ padding: "25px", backgroundColor: "#f9fafb", borderRadius: "12px" }}>
+            <div style={{ padding: "25px", backgroundColor: "#f9fafb", borderRadius: "12px", transition: "transform 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
               <div style={{ fontSize: "45px", marginBottom: "15px" }}>🤝</div>
               <h3 style={{ fontSize: "22px", marginBottom: "10px", fontWeight: "600" }}>Our Promise</h3>
               <p style={{ fontSize: "15px", color: "#6b7280", lineHeight: "1.5" }}>100% transparency in all activities</p>
@@ -214,7 +215,6 @@ function Home() {
       </div>
 
       {/* Quick Impact Overview */}
-      {/* Quick Impact Overview - Reduced Size */}
       <div style={{ padding: "40px 20px", backgroundColor: "#dc2626", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontSize: "28px", marginBottom: "10px", fontWeight: "700" }}>Quick Impact Overview</h2>
@@ -245,8 +245,11 @@ function Home() {
                   backgroundColor: "white", 
                   padding: "25px", 
                   borderRadius: "12px",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
-                }}>
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                  transition: "transform 0.3s"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-5px)"}
+                onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
                   <div style={{ fontSize: "28px", marginBottom: "10px", color: "#dc2626" }}>"</div>
                   <p style={{ fontSize: "14px", lineHeight: "1.6", color: "#4b5563", marginBottom: "20px" }}>{testimonial.text}</p>
                   <div>
@@ -312,6 +315,19 @@ function Home() {
           </form>
         </div>
       </div>
+
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   )
 }
