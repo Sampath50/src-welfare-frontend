@@ -29,6 +29,11 @@ function Admin() {
   const [imageTitle, setImageTitle] = useState("")
   const [imageCategory, setImageCategory] = useState("General")
   const [uploading, setUploading] = useState(false)
+  
+  // Team image upload states
+  const [teamImageFile, setTeamImageFile] = useState(null)
+  const [teamImagePreview, setTeamImagePreview] = useState(null)
+  const [teamUploading, setTeamUploading] = useState(false)
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -76,21 +81,45 @@ function Admin() {
     }
   }
 
-  const addTeamMember = async () => {
-    const newMember = {
-      name: document.getElementById("teamName").value,
-      role: document.getElementById("teamRole").value,
-      bio: document.getElementById("teamBio").value,
-      imageUrl: document.getElementById("teamImage").value,
-      email: document.getElementById("teamEmail").value,
-      phone: document.getElementById("teamPhone").value,
-      order: parseInt(document.getElementById("teamOrder").value) || 0
-    }
+  const uploadTeamImage = async () => {
+    if (!teamImageFile) return null
     
-    if (!newMember.name || !newMember.role) {
+    setTeamUploading(true)
+    const formData = new FormData()
+    formData.append("image", teamImageFile)
+    
+    try {
+      const response = await axios.post("https://src-welfare-backend.onrender.com/api/upload/upload", formData)
+      return response.data.url
+    } catch (error) {
+      console.error("Upload error:", error)
+      return null
+    } finally {
+      setTeamUploading(false)
+    }
+  }
+
+  const addTeamMember = async () => {
+    const name = document.getElementById("teamName").value
+    const role = document.getElementById("teamRole").value
+    const bio = document.getElementById("teamBio").value
+    const email = document.getElementById("teamEmail").value
+    const phone = document.getElementById("teamPhone").value
+    const order = parseInt(document.getElementById("teamOrder").value) || 0
+    
+    if (!name || !role) {
       alert("Name and Role are required!")
       return
     }
+    
+    // Upload image if selected
+    let imageUrl = document.getElementById("teamImage").value
+    if (teamImageFile) {
+      const uploadedUrl = await uploadTeamImage()
+      if (uploadedUrl) imageUrl = uploadedUrl
+    }
+    
+    const newMember = { name, role, bio, imageUrl, email, phone, order }
     
     try {
       const response = await fetch("https://src-welfare-backend.onrender.com/api/admin/team", {
@@ -108,6 +137,8 @@ function Admin() {
         document.getElementById("teamEmail").value = ""
         document.getElementById("teamPhone").value = ""
         document.getElementById("teamOrder").value = "0"
+        setTeamImageFile(null)
+        setTeamImagePreview(null)
         fetchTeam()
       }
     } catch (error) {
@@ -119,6 +150,14 @@ function Admin() {
     if (window.confirm("Delete this team member?")) {
       await fetch(`https://src-welfare-backend.onrender.com/api/admin/team/${id}`, { method: "DELETE" })
       fetchTeam()
+    }
+  }
+
+  const handleTeamImageSelect = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      setTeamImageFile(file)
+      setTeamImagePreview(URL.createObjectURL(file))
     }
   }
 
@@ -544,11 +583,30 @@ function Admin() {
                 <input type="text" id="teamName" placeholder="Full Name" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 <input type="text" id="teamRole" placeholder="Role (e.g., Founder & Director)" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 <textarea id="teamBio" placeholder="Short Bio" rows="3" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
-                <input type="text" id="teamImage" placeholder="Image URL" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                
+                {/* Image Upload */}
+                <div>
+                  <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Profile Image</label>
+                  <div style={{ border: "2px dashed #ccc", padding: "20px", textAlign: "center", borderRadius: "8px", cursor: "pointer", marginBottom: "10px" }}>
+                    <input type="file" accept="image/*" onChange={handleTeamImageSelect} style={{ display: "none" }} id="teamImageUpload" />
+                    <label htmlFor="teamImageUpload" style={{ cursor: "pointer" }}>
+                      {teamImagePreview ? (
+                        <img src={teamImagePreview} alt="Preview" style={{ maxWidth: "150px", maxHeight: "150px", borderRadius: "8px" }} />
+                      ) : (
+                        <div style={{ padding: "20px" }}>📸 Click to upload image</div>
+                      )}
+                    </label>
+                  </div>
+                  <input type="text" id="teamImage" placeholder="Or enter image URL directly" style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                </div>
+                
                 <input type="email" id="teamEmail" placeholder="Email" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 <input type="text" id="teamPhone" placeholder="Phone" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 <input type="number" id="teamOrder" placeholder="Display Order (lower = first)" defaultValue="0" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
-                <button id="addTeamBtn" onClick={addTeamMember} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "12px", borderRadius: "5px", cursor: "pointer" }}>Add Team Member</button>
+                
+                <button id="addTeamBtn" onClick={addTeamMember} disabled={teamUploading} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "12px", borderRadius: "5px", cursor: "pointer" }}>
+                  {teamUploading ? "Uploading Image..." : "Add Team Member"}
+                </button>
               </div>
             </div>
 
@@ -557,11 +615,14 @@ function Admin() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "20px", marginTop: "20px" }}>
               {team.map((member) => (
                 <div key={member._id} style={{ backgroundColor: "white", padding: "15px", borderRadius: "10px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-                    <div>
+                  <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+                    {member.imageUrl && (
+                      <img src={member.imageUrl} alt={member.name} style={{ width: "60px", height: "60px", borderRadius: "50%", objectFit: "cover" }} />
+                    )}
+                    <div style={{ flex: 1 }}>
                       <h3 style={{ margin: "0 0 5px 0" }}>{member.name}</h3>
                       <p style={{ color: "#e74c3c", margin: "0 0 5px 0" }}>{member.role}</p>
-                      {member.bio && <p style={{ fontSize: "13px", color: "#666" }}>{member.bio}</p>}
+                      {member.bio && <p style={{ fontSize: "13px", color: "#666", margin: 0 }}>{member.bio}</p>}
                     </div>
                     <button onClick={() => deleteTeamMember(member._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
                   </div>
