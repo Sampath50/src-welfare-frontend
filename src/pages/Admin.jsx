@@ -112,7 +112,6 @@ function Admin() {
       return
     }
     
-    // Upload image if selected
     let imageUrl = document.getElementById("teamImage").value
     if (teamImageFile) {
       const uploadedUrl = await uploadTeamImage()
@@ -342,29 +341,11 @@ function Admin() {
           <h2 style={{ textAlign: "center", marginBottom: "10px" }}>Admin Login</h2>
           <p style={{ textAlign: "center", fontSize: "12px", color: "#666", marginBottom: "20px" }}>SRC Welfare Trust</p>
           <form onSubmit={handleLogin}>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
-              required
-              style={{ width: "100%", padding: "12px", marginBottom: "15px", borderRadius: "8px", border: "1px solid #ccc" }}
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              required
-              style={{ width: "100%", padding: "12px", marginBottom: "20px", borderRadius: "8px", border: "1px solid #ccc" }}
-            />
-            <button type="submit" style={{ width: "100%", padding: "12px", backgroundColor: "#e74c3c", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>
-              Login
-            </button>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required style={{ width: "100%", padding: "12px", marginBottom: "15px", borderRadius: "8px", border: "1px solid #ccc" }} />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required style={{ width: "100%", padding: "12px", marginBottom: "20px", borderRadius: "8px", border: "1px solid #ccc" }} />
+            <button type="submit" style={{ width: "100%", padding: "12px", backgroundColor: "#e74c3c", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>Login</button>
           </form>
-          <p style={{ textAlign: "center", marginTop: "20px", fontSize: "12px", color: "#666" }}>
-            Username: <strong>admin</strong> | Password: <strong>admin123</strong>
-          </p>
+          <p style={{ textAlign: "center", marginTop: "20px", fontSize: "12px", color: "#666" }}>Username: admin | Password: admin123</p>
         </div>
       </div>
     )
@@ -372,10 +353,24 @@ function Admin() {
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f3f4f6" }}>
-      {/* Sidebar */}
+      {/* Sidebar with Clickable Logo */}
       <div style={{ width: "250px", backgroundColor: "#1f2937", color: "white", padding: "20px 0" }}>
         <div style={{ padding: "0 20px 20px 20px", borderBottom: "1px solid #374151", marginBottom: "20px" }}>
-          <h2>SRC Admin</h2>
+          <div 
+            onClick={() => setActiveTab("dashboard")} 
+            style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}
+          >
+            <img 
+              src="/favicon.png" 
+              alt="Logo" 
+              style={{ 
+                height: "35px", 
+                width: "auto",
+                objectFit: "contain"
+              }} 
+            />
+            <h2 style={{ margin: 0 }}>SRC Admin</h2>
+          </div>
         </div>
         
         <button onClick={() => setActiveTab("dashboard")} style={{ backgroundColor: activeTab === "dashboard" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Dashboard</button>
@@ -403,22 +398,10 @@ function Admin() {
           <div>
             <h2>Dashboard</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
-              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}>
-                <h3>{messages.length}</h3>
-                <p>Messages</p>
-              </div>
-              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}>
-                <h3>{volunteers.length}</h3>
-                <p>Volunteers</p>
-              </div>
-              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}>
-                <h3>{pendingVolunteers}</h3>
-                <p>Pending</p>
-              </div>
-              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}>
-                <h3>₹{totalDonations}</h3>
-                <p>Donations</p>
-              </div>
+              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{messages.length}</h3><p>Messages</p></div>
+              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{volunteers.length}</h3><p>Volunteers</p></div>
+              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{pendingVolunteers}</h3><p>Pending</p></div>
+              <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>₹{totalDonations}</h3><p>Donations</p></div>
             </div>
           </div>
         )}
@@ -431,14 +414,8 @@ function Admin() {
             
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
               <h3>Hero Section</h3>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Main Title</label>
-                <input type="text" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }} />
-              </div>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Subtitle</label>
-                <textarea value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} rows="3" style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
-              </div>
+              <div><label>Main Title</label><input type="text" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }} /></div>
+              <div><label>Subtitle</label><textarea value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} rows="3" style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea></div>
               <button onClick={saveHeroContent} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Save Hero</button>
             </div>
 
@@ -457,14 +434,8 @@ function Admin() {
 
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
               <h3>Mission Section</h3>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Mission Title</label>
-                <input type="text" value={missionTitle} onChange={(e) => setMissionTitle(e.target.value)} style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }} />
-              </div>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Mission Text</label>
-                <textarea value={missionText} onChange={(e) => setMissionText(e.target.value)} rows="4" style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
-              </div>
+              <div><label>Mission Title</label><input type="text" value={missionTitle} onChange={(e) => setMissionTitle(e.target.value)} style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }} /></div>
+              <div><label>Mission Text</label><textarea value={missionText} onChange={(e) => setMissionText(e.target.value)} rows="4" style={{ width: "100%", padding: "10px", marginTop: "5px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea></div>
               <button onClick={saveMissionContent} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Save Mission</button>
             </div>
           </div>
@@ -483,9 +454,7 @@ function Admin() {
                 </select>
                 <div style={{ border: "2px dashed #ccc", padding: "20px", textAlign: "center", borderRadius: "8px", marginBottom: "10px" }}>
                   <input type="file" accept="image/*" onChange={handleFileSelect} style={{ display: "none" }} id="imageUpload" />
-                  <label htmlFor="imageUpload" style={{ cursor: "pointer" }}>
-                    {previewUrl ? <img src={previewUrl} alt="Preview" style={{ maxWidth: "200px" }} /> : "Click to select image"}
-                  </label>
+                  <label htmlFor="imageUpload" style={{ cursor: "pointer" }}>{previewUrl ? <img src={previewUrl} alt="Preview" style={{ maxWidth: "200px" }} /> : "Click to select image"}</label>
                 </div>
                 <button type="submit" disabled={uploading} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>{uploading ? "Uploading..." : "Upload Image"}</button>
               </form>
@@ -494,10 +463,7 @@ function Admin() {
               {gallery.map((img) => (
                 <div key={img._id} style={{ backgroundColor: "white", borderRadius: "10px", overflow: "hidden" }}>
                   <img src={img.imageUrl} alt={img.title} style={{ width: "100%", height: "150px", objectFit: "cover" }} />
-                  <div style={{ padding: "10px" }}>
-                    <h4>{img.title}</h4>
-                    <button onClick={() => deleteGalleryImage(img._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "5px", cursor: "pointer", width: "100%" }}>Delete</button>
-                  </div>
+                  <div style={{ padding: "10px" }}><h4>{img.title}</h4><button onClick={() => deleteGalleryImage(img._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "5px", cursor: "pointer", width: "100%" }}>Delete</button></div>
                 </div>
               ))}
             </div>
@@ -512,12 +478,7 @@ function Admin() {
             {filteredMessages.map((msg) => (
               <div key={msg._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <div>
-                    <h4>{msg.name}</h4>
-                    <p>{msg.email}</p>
-                    <p>{msg.message}</p>
-                    <small>{new Date(msg.createdAt).toLocaleString()}</small>
-                  </div>
+                  <div><h4>{msg.name}</h4><p>{msg.email}</p><p>{msg.message}</p><small>{new Date(msg.createdAt).toLocaleString()}</small></div>
                   <button onClick={() => deleteMessage(msg._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
                 </div>
               </div>
@@ -532,11 +493,7 @@ function Admin() {
             {volunteers.map((vol) => (
               <div key={vol._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <div>
-                    <h4>{vol.name}</h4>
-                    <p>{vol.email} | {vol.phone}</p>
-                    <p>Status: <strong>{vol.status}</strong></p>
-                  </div>
+                  <div><h4>{vol.name}</h4><p>{vol.email} | {vol.phone}</p><p>Status: <strong>{vol.status}</strong></p></div>
                   <div>
                     {vol.status !== "approved" && <button onClick={() => updateVolunteerStatus(vol._id, "approved")} style={{ backgroundColor: "#10b981", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Approve</button>}
                     {vol.status !== "rejected" && <button onClick={() => updateVolunteerStatus(vol._id, "rejected")} style={{ backgroundColor: "#f59e0b", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Reject</button>}
@@ -555,15 +512,11 @@ function Admin() {
             {donations.length === 0 ? <p>No donations yet.</p> : (
               <div>
                 <div style={{ backgroundColor: "#e74c3c", color: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>
-                  <h3>Total: ₹{totalDonations}</h3>
-                  <p>From {donations.length} donors</p>
+                  <h3>Total: ₹{totalDonations}</h3><p>From {donations.length} donors</p>
                 </div>
                 {donations.map((don) => (
                   <div key={don._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
-                    <h4>{don.name}</h4>
-                    <p>{don.email}</p>
-                    <p>₹{don.amount}</p>
-                    <small>{new Date(don.createdAt).toLocaleString()}</small>
+                    <h4>{don.name}</h4><p>{don.email}</p><p>₹{don.amount}</p><small>{new Date(don.createdAt).toLocaleString()}</small>
                   </div>
                 ))}
               </div>
@@ -576,25 +529,19 @@ function Admin() {
           <div>
             <h2>Team Members Management</h2>
             
-            {/* Add Team Member Form */}
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
               <h3>Add New Team Member</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                 <input type="text" id="teamName" placeholder="Full Name" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
-                <input type="text" id="teamRole" placeholder="Role (e.g., Founder & Director)" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <input type="text" id="teamRole" placeholder="Role" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 <textarea id="teamBio" placeholder="Short Bio" rows="3" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
                 
-                {/* Image Upload */}
                 <div>
                   <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Profile Image</label>
                   <div style={{ border: "2px dashed #ccc", padding: "20px", textAlign: "center", borderRadius: "8px", cursor: "pointer", marginBottom: "10px" }}>
                     <input type="file" accept="image/*" onChange={handleTeamImageSelect} style={{ display: "none" }} id="teamImageUpload" />
                     <label htmlFor="teamImageUpload" style={{ cursor: "pointer" }}>
-                      {teamImagePreview ? (
-                        <img src={teamImagePreview} alt="Preview" style={{ maxWidth: "150px", maxHeight: "150px", borderRadius: "8px" }} />
-                      ) : (
-                        <div style={{ padding: "20px" }}>📸 Click to upload image</div>
-                      )}
+                      {teamImagePreview ? <img src={teamImagePreview} alt="Preview" style={{ maxWidth: "150px", maxHeight: "150px", borderRadius: "8px" }} /> : <div style={{ padding: "20px" }}>📸 Click to upload image</div>}
                     </label>
                   </div>
                   <input type="text" id="teamImage" placeholder="Or enter image URL directly" style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
@@ -602,7 +549,7 @@ function Admin() {
                 
                 <input type="email" id="teamEmail" placeholder="Email" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 <input type="text" id="teamPhone" placeholder="Phone" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
-                <input type="number" id="teamOrder" placeholder="Display Order (lower = first)" defaultValue="0" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <input type="number" id="teamOrder" placeholder="Display Order" defaultValue="0" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 
                 <button id="addTeamBtn" onClick={addTeamMember} disabled={teamUploading} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "12px", borderRadius: "5px", cursor: "pointer" }}>
                   {teamUploading ? "Uploading Image..." : "Add Team Member"}
@@ -610,18 +557,15 @@ function Admin() {
               </div>
             </div>
 
-            {/* Team Members List */}
             <h3>Current Team Members ({team.length})</h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "20px", marginTop: "20px" }}>
               {team.map((member) => (
                 <div key={member._id} style={{ backgroundColor: "white", padding: "15px", borderRadius: "10px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
                   <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
-                    {member.imageUrl && (
-                      <img src={member.imageUrl} alt={member.name} style={{ width: "60px", height: "60px", borderRadius: "50%", objectFit: "cover" }} />
-                    )}
+                    {member.imageUrl && <img src={member.imageUrl} alt={member.name} style={{ width: "60px", height: "60px", borderRadius: "50%", objectFit: "cover" }} />}
                     <div style={{ flex: 1 }}>
-                      <h3 style={{ margin: "0 0 5px 0" }}>{member.name}</h3>
-                      <p style={{ color: "#e74c3c", margin: "0 0 5px 0" }}>{member.role}</p>
+                      <h3 style={{ margin: 0 }}>{member.name}</h3>
+                      <p style={{ color: "#e74c3c", margin: 0 }}>{member.role}</p>
                       {member.bio && <p style={{ fontSize: "13px", color: "#666", margin: 0 }}>{member.bio}</p>}
                     </div>
                     <button onClick={() => deleteTeamMember(member._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
