@@ -7,6 +7,7 @@ function Admin() {
   const [volunteers, setVolunteers] = useState([])
   const [gallery, setGallery] = useState([])
   const [donations, setDonations] = useState([])
+  const [team, setTeam] = useState([])
   const [loading, setLoading] = useState(false)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -31,11 +32,11 @@ function Admin() {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    // Check both username and password
     if (username === "admin" && password === currentAdminPassword) {
       setAuthenticated(true)
       fetchAllData()
       loadContent()
+      fetchTeam()
     } else {
       alert("Wrong username or password!")
     }
@@ -62,6 +63,62 @@ function Admin() {
       console.error("Error:", error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchTeam = async () => {
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/admin/team")
+      const data = await response.json()
+      if (data.success) setTeam(data.team)
+    } catch (error) {
+      console.error("Error fetching team:", error)
+    }
+  }
+
+  const addTeamMember = async () => {
+    const newMember = {
+      name: document.getElementById("teamName").value,
+      role: document.getElementById("teamRole").value,
+      bio: document.getElementById("teamBio").value,
+      imageUrl: document.getElementById("teamImage").value,
+      email: document.getElementById("teamEmail").value,
+      phone: document.getElementById("teamPhone").value,
+      order: parseInt(document.getElementById("teamOrder").value) || 0
+    }
+    
+    if (!newMember.name || !newMember.role) {
+      alert("Name and Role are required!")
+      return
+    }
+    
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/admin/team", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newMember)
+      })
+      const data = await response.json()
+      if (data.success) {
+        alert("Team member added!")
+        document.getElementById("teamName").value = ""
+        document.getElementById("teamRole").value = ""
+        document.getElementById("teamBio").value = ""
+        document.getElementById("teamImage").value = ""
+        document.getElementById("teamEmail").value = ""
+        document.getElementById("teamPhone").value = ""
+        document.getElementById("teamOrder").value = "0"
+        fetchTeam()
+      }
+    } catch (error) {
+      alert("Error adding team member")
+    }
+  }
+
+  const deleteTeamMember = async (id) => {
+    if (window.confirm("Delete this team member?")) {
+      await fetch(`https://src-welfare-backend.onrender.com/api/admin/team/${id}`, { method: "DELETE" })
+      fetchTeam()
     }
   }
 
@@ -288,6 +345,7 @@ function Admin() {
         <button onClick={() => setActiveTab("messages")} style={{ backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Messages ({messages.length})</button>
         <button onClick={() => setActiveTab("volunteers")} style={{ backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Volunteers ({volunteers.length})</button>
         <button onClick={() => setActiveTab("donations")} style={{ backgroundColor: activeTab === "donations" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Donations</button>
+        <button onClick={() => setActiveTab("team")} style={{ backgroundColor: activeTab === "team" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>👥 Team Members</button>
         
         <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", marginTop: "20px", width: "100%" }}>Logout</button>
       </div>
@@ -332,7 +390,6 @@ function Admin() {
             <h2>Website Content Manager</h2>
             <p style={{ color: "#666", marginBottom: "20px" }}>Edit your homepage content. Changes will appear instantly.</p>
             
-            {/* Hero Section */}
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
               <h3>Hero Section</h3>
               <div style={{ marginBottom: "10px" }}>
@@ -346,7 +403,6 @@ function Admin() {
               <button onClick={saveHeroContent} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Save Hero</button>
             </div>
 
-            {/* Statistics Section */}
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
               <h3>Statistics Numbers</h3>
               {stats.map((stat, index) => (
@@ -360,7 +416,6 @@ function Admin() {
               <button onClick={saveStatsContent} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Save Stats</button>
             </div>
 
-            {/* Mission Section */}
             <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
               <h3>Mission Section</h3>
               <div style={{ marginBottom: "10px" }}>
@@ -385,11 +440,7 @@ function Admin() {
               <form onSubmit={handleImageUpload}>
                 <input type="text" placeholder="Image Title" value={imageTitle} onChange={(e) => setImageTitle(e.target.value)} required style={{ width: "100%", padding: "10px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
                 <select value={imageCategory} onChange={(e) => setImageCategory(e.target.value)} style={{ width: "100%", padding: "10px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px" }}>
-                  <option>General</option>
-                  <option>Education</option>
-                  <option>Healthcare</option>
-                  <option>Events</option>
-                  <option>Volunteers</option>
+                  <option>General</option><option>Education</option><option>Healthcare</option><option>Events</option><option>Volunteers</option>
                 </select>
                 <div style={{ border: "2px dashed #ccc", padding: "20px", textAlign: "center", borderRadius: "8px", marginBottom: "10px" }}>
                   <input type="file" accept="image/*" onChange={handleFileSelect} style={{ display: "none" }} id="imageUpload" />
@@ -462,9 +513,7 @@ function Admin() {
         {activeTab === "donations" && (
           <div>
             <h2>Donations</h2>
-            {donations.length === 0 ? (
-              <p>No donations yet.</p>
-            ) : (
+            {donations.length === 0 ? <p>No donations yet.</p> : (
               <div>
                 <div style={{ backgroundColor: "#e74c3c", color: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>
                   <h3>Total: ₹{totalDonations}</h3>
@@ -480,6 +529,45 @@ function Admin() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Team Members */}
+        {activeTab === "team" && (
+          <div>
+            <h2>Team Members Management</h2>
+            
+            {/* Add Team Member Form */}
+            <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
+              <h3>Add New Team Member</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+                <input type="text" id="teamName" placeholder="Full Name" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <input type="text" id="teamRole" placeholder="Role (e.g., Founder & Director)" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <textarea id="teamBio" placeholder="Short Bio" rows="3" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
+                <input type="text" id="teamImage" placeholder="Image URL" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <input type="email" id="teamEmail" placeholder="Email" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <input type="text" id="teamPhone" placeholder="Phone" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <input type="number" id="teamOrder" placeholder="Display Order (lower = first)" defaultValue="0" style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                <button id="addTeamBtn" onClick={addTeamMember} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "12px", borderRadius: "5px", cursor: "pointer" }}>Add Team Member</button>
+              </div>
+            </div>
+
+            {/* Team Members List */}
+            <h3>Current Team Members ({team.length})</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "20px", marginTop: "20px" }}>
+              {team.map((member) => (
+                <div key={member._id} style={{ backgroundColor: "white", padding: "15px", borderRadius: "10px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
+                    <div>
+                      <h3 style={{ margin: "0 0 5px 0" }}>{member.name}</h3>
+                      <p style={{ color: "#e74c3c", margin: "0 0 5px 0" }}>{member.role}</p>
+                      {member.bio && <p style={{ fontSize: "13px", color: "#666" }}>{member.bio}</p>}
+                    </div>
+                    <button onClick={() => deleteTeamMember(member._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
