@@ -6,8 +6,34 @@ function DonateUs() {
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(false)
   const [customAmount, setCustomAmount] = useState("")
+  const [currency, setCurrency] = useState("INR")
 
-  const presetAmounts = [500, 1000, 2000, 5000]
+  const currencies = [
+    { code: "INR", symbol: "₹", name: "Indian Rupee", rate: 1 },
+    { code: "USD", symbol: "$", name: "US Dollar", rate: 0.012 },
+    { code: "EUR", symbol: "€", name: "Euro", rate: 0.011 },
+    { code: "GBP", symbol: "£", name: "British Pound", rate: 0.0095 },
+    { code: "AED", symbol: "د.إ", name: "UAE Dirham", rate: 0.044 },
+    { code: "CAD", symbol: "C$", name: "Canadian Dollar", rate: 0.016 },
+    { code: "AUD", symbol: "A$", name: "Australian Dollar", rate: 0.018 },
+    { code: "SGD", symbol: "S$", name: "Singapore Dollar", rate: 0.016 }
+  ]
+
+  const getCurrencySymbol = () => {
+    const curr = currencies.find(c => c.code === currency)
+    return curr ? curr.symbol : "₹"
+  }
+
+  const getPresetAmounts = () => {
+    const curr = currencies.find(c => c.code === currency)
+    if (currency === "INR") return [500, 1000, 2000, 5000]
+    if (currency === "USD") return [10, 25, 50, 100]
+    if (currency === "EUR") return [10, 25, 50, 100]
+    if (currency === "GBP") return [10, 25, 50, 100]
+    return [500, 1000, 2000, 5000]
+  }
+
+  const presetAmounts = getPresetAmounts()
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -30,6 +56,12 @@ function DonateUs() {
     setAmount(value)
   }
 
+  const convertToINR = (amt) => {
+    const curr = currencies.find(c => c.code === currency)
+    if (currency === "INR") return amt
+    return Math.round(amt / curr.rate)
+  }
+
   const handlePayment = async () => {
     const finalAmount = amount || customAmount
     if (!finalAmount || !name || !email) {
@@ -38,7 +70,7 @@ function DonateUs() {
     }
 
     if (finalAmount < 10) {
-      alert("Minimum donation amount is ₹10")
+      alert(`Minimum donation amount is ${getCurrencySymbol()}10`)
       return
     }
 
@@ -51,17 +83,18 @@ function DonateUs() {
       return
     }
 
-    // Your Razorpay Test Keys
+    const amountInINR = convertToINR(finalAmount)
+
     const options = {
       key: "rzp_test_SwFmt0zzFWp1o0",
-      amount: Math.round(parseFloat(finalAmount) * 100),
+      amount: Math.round(amountInINR * 100),
       currency: "INR",
       name: "SRC Welfare Trust",
-      description: "Donation for a cause",
+      description: `Donation (${currency} ${finalAmount})`,
       image: "/favicon.png",
       handler: function (response) {
         alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`)
-        saveDonation(response.razorpay_payment_id)
+        saveDonation(response.razorpay_payment_id, finalAmount, currency)
         setAmount("")
         setCustomAmount("")
         setName("")
@@ -72,7 +105,7 @@ function DonateUs() {
         email: email,
       },
       theme: {
-        color: "#e74c3c",
+        color: "#dc2626",
       },
       modal: {
         ondismiss: function () {
@@ -86,7 +119,7 @@ function DonateUs() {
     setLoading(false)
   }
 
-  const saveDonation = async (paymentId) => {
+  const saveDonation = async (paymentId, donationAmount, donationCurrency) => {
     try {
       await fetch("https://src-welfare-backend.onrender.com/api/admin/donations", {
         method: "POST",
@@ -94,7 +127,8 @@ function DonateUs() {
         body: JSON.stringify({
           name: name,
           email: email,
-          amount: amount || customAmount,
+          amount: donationAmount,
+          currency: donationCurrency,
           paymentId: paymentId
         })
       })
@@ -103,86 +137,118 @@ function DonateUs() {
     }
   }
 
+  const currentSymbol = getCurrencySymbol()
+
   return (
-    <div style={{ padding: "80px 20px", backgroundColor: "#f3f4f6", minHeight: "100vh" }}>
-      <div style={{ maxWidth: "550px", margin: "0 auto", backgroundColor: "white", padding: "40px", borderRadius: "15px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}>
+    <div style={{ padding: "80px 20px", backgroundColor: "#f9fafb", minHeight: "100vh" }}>
+      <div style={{ maxWidth: "550px", margin: "0 auto", backgroundColor: "white", padding: "40px", borderRadius: "16px", boxShadow: "0 4px 6px rgba(0,0,0,0.05)" }}>
         
-        <h1 style={{ fontSize: "36px", textAlign: "center", marginBottom: "10px", color: "#e74c3c" }}>Donate Now</h1>
-        <p style={{ textAlign: "center", marginBottom: "40px", color: "#666" }}>Your contribution changes lives</p>
+        <h1 style={{ fontSize: "32px", textAlign: "center", marginBottom: "10px", color: "#1f2937", fontWeight: "700" }}>Donate Now</h1>
+        <p style={{ textAlign: "center", marginBottom: "30px", color: "#6b7280" }}>Your contribution changes lives</p>
         
+        {/* Currency Selector */}
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Name</label>
+          <label style={{ display: "block", marginBottom: "8px", fontWeight: "500", color: "#1f2937" }}>Select Currency</label>
+          <select 
+            value={currency} 
+            onChange={(e) => {
+              setCurrency(e.target.value)
+              setAmount("")
+              setCustomAmount("")
+            }}
+            style={{ width: "100%", padding: "12px", border: "1px solid #e5e7eb", borderRadius: "8px", fontSize: "16px", backgroundColor: "white", cursor: "pointer" }}
+          >
+            {currencies.map((c) => (
+              <option key={c.code} value={c.code}>{c.symbol} {c.code} - {c.name}</option>
+            ))}
+          </select>
+        </div>
+        
+        {/* Name Field */}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ display: "block", marginBottom: "8px", fontWeight: "500", color: "#1f2937" }}>Your Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your name"
-            style={{ width: "100%", padding: "12px", border: "1px solid #ccc", borderRadius: "8px", fontSize: "16px" }}
+            style={{ width: "100%", padding: "12px", border: "1px solid #e5e7eb", borderRadius: "8px", fontSize: "16px" }}
           />
         </div>
         
+        {/* Email Field */}
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Your Email</label>
+          <label style={{ display: "block", marginBottom: "8px", fontWeight: "500", color: "#1f2937" }}>Your Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
-            style={{ width: "100%", padding: "12px", border: "1px solid #ccc", borderRadius: "8px", fontSize: "16px" }}
+            style={{ width: "100%", padding: "12px", border: "1px solid #e5e7eb", borderRadius: "8px", fontSize: "16px" }}
           />
         </div>
         
+        {/* Amount Selection */}
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "10px", fontWeight: "bold" }}>Select Amount (₹)</label>
+          <label style={{ display: "block", marginBottom: "8px", fontWeight: "500", color: "#1f2937" }}>Select Amount ({currentSymbol})</label>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginBottom: "15px" }}>
             {presetAmounts.map((amt) => (
               <button
                 key={amt}
                 onClick={() => handleAmountSelect(amt)}
                 style={{
-                  padding: "12px",
-                  backgroundColor: amount === amt ? "#e74c3c" : "#f3f4f6",
-                  color: amount === amt ? "white" : "#333",
+                  padding: "10px",
+                  backgroundColor: amount === amt ? "#dc2626" : "#f3f4f6",
+                  color: amount === amt ? "white" : "#1f2937",
                   border: "none",
                   borderRadius: "8px",
                   cursor: "pointer",
-                  fontWeight: "bold"
+                  fontWeight: "500",
+                  transition: "all 0.3s"
                 }}
               >
-                ₹{amt}
+                {currentSymbol}{amt}
               </button>
             ))}
           </div>
           
           <input
             type="number"
-            placeholder="Or enter custom amount (₹)"
+            placeholder={`Or enter custom amount (${currentSymbol})`}
             value={customAmount}
             onChange={handleCustomAmount}
-            style={{ width: "100%", padding: "12px", border: "1px solid #ccc", borderRadius: "8px", fontSize: "16px" }}
+            style={{ width: "100%", padding: "12px", border: "1px solid #e5e7eb", borderRadius: "8px", fontSize: "16px" }}
           />
         </div>
         
+        {/* Donate Button */}
         <button
           onClick={handlePayment}
           disabled={loading || (!amount && !customAmount) || !name || !email}
           style={{
             width: "100%",
-            backgroundColor: loading ? "#ccc" : "#e74c3c",
+            backgroundColor: loading ? "#9ca3af" : "#dc2626",
             color: "white",
-            padding: "16px",
+            padding: "14px",
             border: "none",
             borderRadius: "8px",
-            fontSize: "18px",
-            fontWeight: "bold",
+            fontSize: "16px",
+            fontWeight: "500",
             cursor: loading ? "not-allowed" : "pointer",
+            transition: "all 0.3s",
             marginTop: "10px"
           }}
+          onMouseEnter={(e) => {
+            if (!loading) e.target.style.backgroundColor = "#b91c1c"
+          }}
+          onMouseLeave={(e) => {
+            if (!loading) e.target.style.backgroundColor = "#dc2626"
+          }}
         >
-          {loading ? "Processing..." : `Donate ₹${amount || customAmount || "0"}`}
+          {loading ? "Processing..." : `Donate ${currentSymbol}${amount || customAmount || "0"}`}
         </button>
         
-        <p style={{ textAlign: "center", marginTop: "20px", fontSize: "12px", color: "#999" }}>
+        <p style={{ textAlign: "center", marginTop: "20px", fontSize: "12px", color: "#9ca3af" }}>
           🔒 Secure payment powered by Razorpay
         </p>
       </div>
