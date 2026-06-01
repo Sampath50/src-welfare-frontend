@@ -23,8 +23,6 @@ function Admin() {
   // Edit modal states
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [editingMember, setEditingMember] = useState(null)
-  const [editingItem, setEditingItem] = useState(null)
-  const [editType, setEditType] = useState("")
   
   // Form states
   const [newTestimonial, setNewTestimonial] = useState({ name: "", role: "", text: "", rating: 5, imageUrl: "" })
@@ -625,7 +623,7 @@ function Admin() {
           </div>
         </div>
         
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px", overflowY: "auto" }}>
           <button onClick={() => setActiveTab("dashboard")} style={{ backgroundColor: activeTab === "dashboard" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>📊</span> Dashboard</button>
           <button onClick={() => setActiveTab("content")} style={{ backgroundColor: activeTab === "content" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>📝</span> Content Manager</button>
           <button onClick={() => setActiveTab("gallery")} style={{ backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>🖼️</span> Gallery</button>
@@ -642,7 +640,9 @@ function Admin() {
         </div>
         
         <div style={{ padding: "20px 12px 0 12px", borderTop: "1px solid #374151", marginTop: "20px" }}>
-          <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "12px 20px", width: "100%", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>🚪</span> Logout</button>
+          <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "12px 20px", width: "100%", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px", transition: "all 0.2s" }}>
+            <span style={{ fontSize: "18px" }}>🚪</span> Logout
+          </button>
         </div>
       </div>
 
@@ -654,7 +654,7 @@ function Admin() {
         {/* Dashboard */}
         {activeTab === "dashboard" && (
           <div>
-            <h2>Dashboard</h2>
+            <h2>Dashboard Overview</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
               <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{messages.length}</h3><p>Messages</p></div>
               <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", textAlign: "center" }}><h3>{volunteers.length}</h3><p>Volunteers</p></div>
@@ -726,7 +726,7 @@ function Admin() {
         {/* Messages */}
         {activeTab === "messages" && (
           <div>
-            <h2>Messages</h2>
+            <h2>Contact Messages</h2>
             <input type="text" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ padding: "8px", marginBottom: "20px", border: "1px solid #ccc", borderRadius: "5px", width: "200px" }} />
             {filteredMessages.map((msg) => (
               <div key={msg._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
@@ -742,7 +742,7 @@ function Admin() {
         {/* Volunteers */}
         {activeTab === "volunteers" && (
           <div>
-            <h2>Volunteers</h2>
+            <h2>Volunteer Applications</h2>
             {volunteers.map((vol) => (
               <div key={vol._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
