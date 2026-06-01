@@ -214,16 +214,17 @@ function Home() {
       </div>
 
       {/* Quick Impact Overview */}
-      <div style={{ padding: "60px 20px", backgroundColor: "#dc2626", color: "white" }}>
+      {/* Quick Impact Overview - Reduced Size */}
+      <div style={{ padding: "40px 20px", backgroundColor: "#dc2626", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontSize: "32px", marginBottom: "15px", fontWeight: "700" }}>Quick Impact Overview</h2>
-          <p style={{ fontSize: "16px", marginBottom: "40px", opacity: 0.9 }}>Our reach across communities</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "30px" }}>
+          <h2 style={{ fontSize: "28px", marginBottom: "10px", fontWeight: "700" }}>Quick Impact Overview</h2>
+          <p style={{ fontSize: "14px", marginBottom: "30px", opacity: 0.9 }}>Our reach across communities</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "20px" }}>
             {impactNumbers.map((item, index) => (
               <div key={index}>
-                <div style={{ fontSize: "40px", marginBottom: "10px" }}>{item.icon}</div>
-                <h3 style={{ fontSize: "28px", fontWeight: "bold", margin: "10px 0" }}>{item.number}</h3>
-                <p style={{ fontSize: "14px", opacity: 0.9 }}>{item.label}</p>
+                <div style={{ fontSize: "32px", marginBottom: "5px" }}>{item.icon}</div>
+                <h3 style={{ fontSize: "24px", fontWeight: "bold", margin: "5px 0" }}>{item.number}</h3>
+                <p style={{ fontSize: "12px", opacity: 0.9 }}>{item.label}</p>
               </div>
             ))}
           </div>
