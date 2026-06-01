@@ -56,7 +56,7 @@ function Footer() {
       </div>
       
       <div style={{ textAlign: "center", paddingTop: "40px", marginTop: "20px", borderTop: "1px solid #374151", color: "#9ca3af" }}>
-        <p>© 2024 SRC Welfare Trust. All rights reserved.</p>
+        <p>© 2026 SRC Welfare Trust. All rights reserved.</p>
       </div>
     </footer>
   )
