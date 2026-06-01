@@ -24,6 +24,11 @@ function Admin() {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [editingMember, setEditingMember] = useState(null)
   
+  // Testimonial edit states
+  const [editingTestimonial, setEditingTestimonial] = useState(null)
+  const [editTestimonialModal, setEditTestimonialModal] = useState(false)
+  const [editTestimonialData, setEditTestimonialData] = useState({ name: "", role: "", text: "", rating: 5, imageUrl: "" })
+  
   // Form states
   const [newTestimonial, setNewTestimonial] = useState({ name: "", role: "", text: "", rating: 5, imageUrl: "" })
   const [newEvent, setNewEvent] = useState({ title: "", description: "", date: "", time: "", location: "", imageUrl: "", category: "General" })
@@ -180,6 +185,40 @@ function Admin() {
     if (window.confirm("Delete this testimonial?")) {
       await fetch(`https://src-welfare-backend.onrender.com/api/admin/testimonials/${id}`, { method: "DELETE" })
       fetchTestimonials()
+    }
+  }
+
+  const openEditTestimonialModal = (testimonial) => {
+    setEditingTestimonial(testimonial)
+    setEditTestimonialData({
+      name: testimonial.name,
+      role: testimonial.role,
+      text: testimonial.text,
+      rating: testimonial.rating,
+      imageUrl: testimonial.imageUrl || ""
+    })
+    setEditTestimonialModal(true)
+  }
+
+  const updateTestimonial = async () => {
+    if (!editTestimonialData.name || !editTestimonialData.role || !editTestimonialData.text) {
+      alert("Name, Role and Testimonial text are required!")
+      return
+    }
+    try {
+      const response = await fetch(`https://src-welfare-backend.onrender.com/api/admin/testimonials/${editingTestimonial._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editTestimonialData)
+      })
+      const data = await response.json()
+      if (data.success) {
+        alert("Testimonial updated!")
+        setEditTestimonialModal(false)
+        fetchTestimonials()
+      }
+    } catch (error) {
+      alert("Error updating testimonial")
     }
   }
 
@@ -827,7 +866,7 @@ function Admin() {
           </div>
         )}
 
-        {/* Testimonials */}
+        {/* Testimonials with Edit */}
         {activeTab === "testimonials" && (
           <div>
             <h2>Testimonials Management</h2>
@@ -845,12 +884,39 @@ function Admin() {
             <h3>Current Testimonials ({testimonials.length})</h3>
             {testimonials.map((t) => (
               <div key={t._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <div><strong>{t.name}</strong> - {t.role}<p>{t.text}</p><div style={{ color: "#f39c12" }}>{"★".repeat(t.rating)}{"☆".repeat(5 - t.rating)}</div></div>
-                  <button onClick={() => deleteTestimonial(t._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <strong>{t.name}</strong> - {t.role}
+                    <p>{t.text}</p>
+                    <div style={{ color: "#f39c12" }}>{"★".repeat(t.rating)}{"☆".repeat(5 - t.rating)}</div>
+                  </div>
+                  <div>
+                    <button onClick={() => openEditTestimonialModal(t)} style={{ backgroundColor: "#f59e0b", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer", marginRight: "10px" }}>Edit</button>
+                    <button onClick={() => deleteTestimonial(t._id)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "8px 16px", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
+                  </div>
                 </div>
               </div>
             ))}
+            
+            {/* Edit Testimonial Modal */}
+            {editTestimonialModal && (
+              <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }} onClick={() => setEditTestimonialModal(false)}>
+                <div style={{ backgroundColor: "white", padding: "25px", borderRadius: "10px", width: "500px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
+                  <h3>Edit Testimonial</h3>
+                  <input type="text" placeholder="Name" value={editTestimonialData.name} onChange={(e) => setEditTestimonialData({ ...editTestimonialData, name: e.target.value })} style={{ width: "100%", padding: "10px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                  <input type="text" placeholder="Role" value={editTestimonialData.role} onChange={(e) => setEditTestimonialData({ ...editTestimonialData, role: e.target.value })} style={{ width: "100%", padding: "10px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                  <textarea placeholder="Testimonial Text" value={editTestimonialData.text} onChange={(e) => setEditTestimonialData({ ...editTestimonialData, text: e.target.value })} rows="3" style={{ width: "100%", padding: "10px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px" }}></textarea>
+                  <select value={editTestimonialData.rating} onChange={(e) => setEditTestimonialData({ ...editTestimonialData, rating: parseInt(e.target.value) })} style={{ width: "100%", padding: "10px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px" }}>
+                    <option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option><option value="2">★★☆☆☆ (2)</option><option value="1">★☆☆☆☆ (1)</option>
+                  </select>
+                  <input type="text" placeholder="Image URL (optional)" value={editTestimonialData.imageUrl} onChange={(e) => setEditTestimonialData({ ...editTestimonialData, imageUrl: e.target.value })} style={{ width: "100%", padding: "10px", marginBottom: "10px", border: "1px solid #ccc", borderRadius: "5px" }} />
+                  <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                    <button onClick={updateTestimonial} style={{ backgroundColor: "#e74c3c", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Save Changes</button>
+                    <button onClick={() => setEditTestimonialModal(false)} style={{ backgroundColor: "#666", color: "white", border: "none", padding: "10px 20px", borderRadius: "5px", cursor: "pointer" }}>Cancel</button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

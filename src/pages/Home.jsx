@@ -9,11 +9,13 @@ function Home() {
     stats: [{ number: "500+", label: "Families Helped" }, { number: "1200+", label: "Students Supported" }, { number: "50+", label: "Medical Camps" }, { number: "100+", label: "Volunteers" }],
     mission: { title: "Our Mission", text: "To empower underserved communities through education, healthcare, and social welfare programs." }
   })
+  const [testimonials, setTestimonials] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setAnimate(true)
     fetchContent()
+    fetchTestimonials()
   }, [])
 
   const fetchContent = async () => {
@@ -31,6 +33,18 @@ function Home() {
       }
     } catch (error) {
       console.error("Error fetching content:", error)
+    }
+  }
+
+  const fetchTestimonials = async () => {
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/admin/testimonials")
+      const data = await response.json()
+      if (data.success) {
+        setTestimonials(data.testimonials)
+      }
+    } catch (error) {
+      console.error("Error fetching testimonials:", error)
     } finally {
       setLoading(false)
     }
@@ -73,12 +87,6 @@ function Home() {
     { number: "25+", label: "Events Organized", icon: "🎉" },
     { number: "15+", label: "Partner NGOs", icon: "🤝" },
     { number: "200+", label: "Active Donors", icon: "❤️" }
-  ]
-
-  const testimonials = [
-    { name: "Rajesh Kumar", role: "Parent", text: "SRC Welfare Trust helped my daughter continue her education. Forever grateful!", rating: 5 },
-    { name: "Priya Sharma", role: "Volunteer", text: "Working with this organization has been life-changing. Their dedication is inspiring.", rating: 5 },
-    { name: "Dr. Suresh Reddy", role: "Partner", text: "Their medical camps have brought healthcare to remote villages.", rating: 5 }
   ]
 
   if (loading) {
@@ -203,7 +211,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Quick Impact Overview - REDUCED SIZE */}
+      {/* Quick Impact Overview */}
       <div style={{ padding: "50px 20px", backgroundColor: "#2197db", color: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontSize: "32px", marginBottom: "15px" }}>Quick Impact Overview</h2>
@@ -220,24 +228,30 @@ function Home() {
         </div>
       </div>
 
-      {/* Testimonials Section - REDUCED SIZE */}
+      {/* Testimonials Section - Dynamic from API */}
       <div style={{ padding: "50px 20px", backgroundColor: "#f8f9fa" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "32px", textAlign: "center", marginBottom: "10px" }}>What People Say</h2>
           <p style={{ textAlign: "center", fontSize: "16px", color: "#666", marginBottom: "40px" }}>Stories of hope and transformation</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "25px" }}>
-            {testimonials.map((testimonial, index) => (
-              <div key={index} style={{ backgroundColor: "white", padding: "20px", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
-                <div style={{ fontSize: "30px", marginBottom: "10px" }}>"</div>
-                <p style={{ fontSize: "14px", lineHeight: "1.5", color: "#555", marginBottom: "15px" }}>{testimonial.text}</p>
-                <div style={{ marginTop: "10px" }}>
-                  <h4 style={{ margin: "0", fontSize: "16px" }}>{testimonial.name}</h4>
-                  <p style={{ margin: "3px 0 0", fontSize: "12px", color: "#e74c3c" }}>{testimonial.role}</p>
-                  <div style={{ color: "#f39c12", marginTop: "5px", fontSize: "12px" }}>{"★".repeat(testimonial.rating)}</div>
+          {testimonials.length === 0 ? (
+            <p style={{ textAlign: "center", color: "#666" }}>No testimonials yet. Add them from Admin Panel.</p>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "25px" }}>
+              {testimonials.map((testimonial) => (
+                <div key={testimonial._id} style={{ backgroundColor: "white", padding: "20px", borderRadius: "12px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
+                  <div style={{ fontSize: "30px", marginBottom: "10px" }}>"</div>
+                  <p style={{ fontSize: "14px", lineHeight: "1.5", color: "#555", marginBottom: "15px" }}>{testimonial.text}</p>
+                  <div style={{ marginTop: "10px" }}>
+                    <h4 style={{ margin: "0", fontSize: "16px" }}>{testimonial.name}</h4>
+                    <p style={{ margin: "3px 0 0", fontSize: "12px", color: "#e74c3c" }}>{testimonial.role}</p>
+                    <div style={{ color: "#f39c12", marginTop: "5px", fontSize: "12px" }}>
+                      {"★".repeat(testimonial.rating)}{"☆".repeat(5 - testimonial.rating)}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
