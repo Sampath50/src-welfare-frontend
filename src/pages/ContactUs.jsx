@@ -195,7 +195,7 @@ function ContactUs() {
                   <div style={{ fontSize: "30px" }}>💬</div>
                   <div>
                     <h4 style={{ margin: "0 0 5px 0" }}>WhatsApp Us</h4>
-                    <p style={{ margin: 0, color: "#e74c3c" }}>+91 9392302450</p>
+                    <p style={{ margin: 0, color: "#e74c3c" }}>+91 8184898542</p>
                   </div>
                 </div>
               </div>
