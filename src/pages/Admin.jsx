@@ -797,20 +797,44 @@ function Admin() {
           </div>
         )}
 
-        {/* Donations */}
+        {/* Donations - Updated with Currency Display */}
         {activeTab === "donations" && (
           <div>
             <h2>Donations</h2>
-            {donations.length === 0 ? <p>No donations yet.</p> : (
+            {donations.length === 0 ? (
+              <p>No donations yet.</p>
+            ) : (
               <div>
                 <div style={{ backgroundColor: "#e74c3c", color: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px", textAlign: "center" }}>
-                  <h3>Total: ₹{totalDonations}</h3><p>From {donations.length} donors</p>
+                  <h3>Total: ₹{totalDonations}</h3>
+                  <p>From {donations.length} donors</p>
                 </div>
-                {donations.map((don) => (
-                  <div key={don._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
-                    <h4>{don.name}</h4><p>{don.email}</p><p>₹{don.amount}</p><small>{new Date(don.createdAt).toLocaleString()}</small>
-                  </div>
-                ))}
+                {donations.map((don) => {
+                  const getCurrencySymbol = () => {
+                    if (don.currency === "USD") return "$"
+                    if (don.currency === "EUR") return "€"
+                    if (don.currency === "GBP") return "£"
+                    if (don.currency === "AED") return "د.إ"
+                    if (don.currency === "CAD") return "C$"
+                    if (don.currency === "AUD") return "A$"
+                    if (don.currency === "SGD") return "S$"
+                    return "₹"
+                  }
+                  return (
+                    <div key={don._id} style={{ backgroundColor: "white", padding: "15px", marginBottom: "15px", borderRadius: "10px" }}>
+                      <h4 style={{ margin: "0 0 5px 0" }}>{don.name}</h4>
+                      <p style={{ margin: "5px 0" }}>📧 {don.email}</p>
+                      <p style={{ margin: "5px 0" }}>
+                        💰 Amount: {getCurrencySymbol()}{don.amount}
+                        <span style={{ fontSize: "12px", color: "#666", marginLeft: "10px" }}>
+                          ({don.currency || "INR"})
+                        </span>
+                      </p>
+                      <p style={{ margin: "5px 0" }}>🆔 Payment ID: {don.paymentId || "N/A"}</p>
+                      <small>{new Date(don.createdAt).toLocaleString()}</small>
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>
