@@ -1,8 +1,7 @@
 function WhatsAppButton() {
-  // Your WhatsApp number (India: 91 + 10 digits, no +, no spaces)
-  const phoneNumber = "919392302450"
-  const message = "Hello! I have a question about SRC Welfare Trust"
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+  const phoneNumber = "918374848542"; // Replace with your WhatsApp number (country code + number, no '+' or spaces)
+  const message = "Hello! I have a question about SRC Welfare Trust";
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
     <a
@@ -12,28 +11,28 @@ function WhatsAppButton() {
       style={{
         position: "fixed",
         bottom: "20px",
-        right: "20px",
+        left: "20px",
         backgroundColor: "#25D366",
-        color: "white",
+        borderRadius: "50%",
         width: "60px",
         height: "60px",
-        borderRadius: "50%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "30px",
-        boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-        cursor: "pointer",
-        zIndex: 1000,
-        transition: "transform 0.3s",
-        textDecoration: "none"
+        boxShadow: "2px 2px 10px rgba(0,0,0,0.3)",
+        zIndex: 9999,
+        transition: "transform 0.3s"
       }}
       onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
       onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
     >
-      💬
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+        alt="WhatsApp"
+        style={{ width: "32px", height: "32px" }}
+      />
     </a>
-  )
+  );
 }
 
-export default WhatsAppButton
+export default WhatsAppButton;
