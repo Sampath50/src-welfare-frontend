@@ -78,7 +78,7 @@ function AboutUs() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "30px", marginTop: "30px" }}>
             <div style={{ textAlign: "center", backgroundColor: "white", padding: "25px", borderRadius: "15px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
               <div style={{ width: "120px", height: "120px", backgroundColor: "#e74c3c", borderRadius: "50%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "50px" }}>👨‍💼</div>
-              <h3 style={{ margin: "15px 0 5px 0" }}>Sampath Reddy</h3>
+              <h3 style={{ margin: "15px 0 5px 0" }}>SrHari Tanniru</h3>
               <p style={{ color: "#e74c3c", fontWeight: "bold" }}>Founder & Director</p>
               <p style={{ fontSize: "14px", color: "#666", marginTop: "10px" }}>15+ years of experience in social work</p>
             </div>
@@ -90,7 +90,7 @@ function AboutUs() {
             </div>
             <div style={{ textAlign: "center", backgroundColor: "white", padding: "25px", borderRadius: "15px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
               <div style={{ width: "120px", height: "120px", backgroundColor: "#e74c3c", borderRadius: "50%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "50px" }}>👨‍⚕️</div>
-              <h3 style={{ margin: "15px 0 5px 0" }}>Dr. Suresh Reddy</h3>
+              <h3 style={{ margin: "15px 0 5px 0" }}>Ramu Thoka</h3>
               <p style={{ color: "#e74c3c", fontWeight: "bold" }}>Medical Director</p>
               <p style={{ fontSize: "14px", color: "#666", marginTop: "10px" }}>Leading healthcare initiatives</p>
             </div>
