@@ -1,4 +1,27 @@
+import { useState, useEffect } from "react"
+
 function AboutUs() {
+  const [team, setTeam] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchTeam()
+  }, [])
+
+  const fetchTeam = async () => {
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/admin/team")
+      const data = await response.json()
+      if (data.success) {
+        setTeam(data.team)
+      }
+    } catch (error) {
+      console.error("Error fetching team:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div>
       {/* Hero Section */}
@@ -72,29 +95,31 @@ function AboutUs() {
           </div>
         </div>
 
-        {/* Team Section */}
+        {/* Team Section - Dynamic from API */}
         <div style={{ marginBottom: "60px" }}>
           <h2 style={{ fontSize: "32px", marginBottom: "20px", textAlign: "center", color: "#e74c3c" }}>Our Leadership Team</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "30px", marginTop: "30px" }}>
-            <div style={{ textAlign: "center", backgroundColor: "white", padding: "25px", borderRadius: "15px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
-              <div style={{ width: "120px", height: "120px", backgroundColor: "#e74c3c", borderRadius: "50%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "50px" }}>👨‍💼</div>
-              <h3 style={{ margin: "15px 0 5px 0" }}>SriHari Tanniru</h3>
-              <p style={{ color: "#e74c3c", fontWeight: "bold" }}>Founder & Director</p>
-              <p style={{ fontSize: "14px", color: "#666", marginTop: "10px" }}>15+ years of experience in social work</p>
+          {loading ? (
+            <p style={{ textAlign: "center" }}>Loading team members...</p>
+          ) : team.length === 0 ? (
+            <p style={{ textAlign: "center", color: "#666" }}>No team members added yet. Add them from Admin Panel.</p>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "30px", marginTop: "30px" }}>
+              {team.map((member) => (
+                <div key={member._id} style={{ textAlign: "center", backgroundColor: "white", padding: "25px", borderRadius: "15px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
+                  <div style={{ width: "120px", height: "120px", backgroundColor: "#f3f4f6", borderRadius: "50%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+                    {member.imageUrl ? (
+                      <img src={member.imageUrl} alt={member.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    ) : (
+                      <span style={{ fontSize: "50px" }}>👤</span>
+                    )}
+                  </div>
+                  <h3 style={{ margin: "15px 0 5px 0" }}>{member.name}</h3>
+                  <p style={{ color: "#e74c3c", fontWeight: "bold" }}>{member.role}</p>
+                  {member.bio && <p style={{ fontSize: "14px", color: "#666", marginTop: "10px" }}>{member.bio}</p>}
+                </div>
+              ))}
             </div>
-            <div style={{ textAlign: "center", backgroundColor: "white", padding: "25px", borderRadius: "15px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
-              <div style={{ width: "120px", height: "120px", backgroundColor: "#e74c3c", borderRadius: "50%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "50px" }}>👩‍💼</div>
-              <h3 style={{ margin: "15px 0 5px 0" }}>Priya Sharma</h3>
-              <p style={{ color: "#e74c3c", fontWeight: "bold" }}>Co-Founder & Secretary</p>
-              <p style={{ fontSize: "14px", color: "#666", marginTop: "10px" }}>Expert in community development</p>
-            </div>
-            <div style={{ textAlign: "center", backgroundColor: "white", padding: "25px", borderRadius: "15px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}>
-              <div style={{ width: "120px", height: "120px", backgroundColor: "#e74c3c", borderRadius: "50%", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "50px" }}>👨‍⚕️</div>
-              <h3 style={{ margin: "15px 0 5px 0" }}>Ramu Thoka</h3>
-              <p style={{ color: "#e74c3c", fontWeight: "bold" }}>Medical Director</p>
-              <p style={{ fontSize: "14px", color: "#666", marginTop: "10px" }}>Leading healthcare initiatives</p>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Impact Numbers Section */}
