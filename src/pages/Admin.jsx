@@ -353,35 +353,66 @@ function Admin() {
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f3f4f6" }}>
-      {/* Sidebar with Clickable Logo */}
-      <div style={{ width: "250px", backgroundColor: "#1f2937", color: "white", padding: "20px 0" }}>
-        <div style={{ padding: "0 20px 20px 20px", borderBottom: "1px solid #374151", marginBottom: "20px" }}>
-          <div 
-            onClick={() => setActiveTab("dashboard")} 
-            style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "10px" }}
-          >
-            <img 
-              src="/favicon.png" 
-              alt="Logo" 
-              style={{ 
-                height: "35px", 
-                width: "auto",
-                objectFit: "contain"
-              }} 
-            />
-            <h2 style={{ margin: 0 }}>SRC Admin</h2>
+      {/* Sidebar - Clean Design */}
+      <div style={{ 
+        width: "280px", 
+        backgroundColor: "#1f2937", 
+        color: "white", 
+        padding: "25px 0",
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        position: "sticky",
+        top: 0
+      }}>
+        {/* Logo Section */}
+        <div style={{ padding: "0 20px 25px 20px", borderBottom: "1px solid #374151", marginBottom: "20px" }}>
+          <div onClick={() => setActiveTab("dashboard")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "12px" }}>
+            <img src="/favicon.png" alt="Logo" style={{ height: "40px", width: "40px", borderRadius: "8px", objectFit: "cover" }} />
+            <div>
+              <div style={{ fontWeight: "bold", fontSize: "16px" }}>SRC Admin</div>
+              <div style={{ fontSize: "10px", color: "#9ca3af" }}>Dashboard</div>
+            </div>
           </div>
         </div>
         
-        <button onClick={() => setActiveTab("dashboard")} style={{ backgroundColor: activeTab === "dashboard" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Dashboard</button>
-        <button onClick={() => setActiveTab("content")} style={{ backgroundColor: activeTab === "content" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>📝 Content Manager</button>
-        <button onClick={() => setActiveTab("gallery")} style={{ backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Gallery</button>
-        <button onClick={() => setActiveTab("messages")} style={{ backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Messages ({messages.length})</button>
-        <button onClick={() => setActiveTab("volunteers")} style={{ backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Volunteers ({volunteers.length})</button>
-        <button onClick={() => setActiveTab("donations")} style={{ backgroundColor: activeTab === "donations" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>Donations</button>
-        <button onClick={() => setActiveTab("team")} style={{ backgroundColor: activeTab === "team" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", width: "100%" }}>👥 Team Members</button>
+        {/* Navigation Menu */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
+          <button onClick={() => setActiveTab("dashboard")} style={{ backgroundColor: activeTab === "dashboard" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>📊</span> Dashboard
+          </button>
+          
+          <button onClick={() => setActiveTab("content")} style={{ backgroundColor: activeTab === "content" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>📝</span> Content Manager
+          </button>
+          
+          <button onClick={() => setActiveTab("gallery")} style={{ backgroundColor: activeTab === "gallery" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>🖼️</span> Gallery
+          </button>
+          
+          <button onClick={() => setActiveTab("messages")} style={{ backgroundColor: activeTab === "messages" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>📧</span> Messages ({messages.length})
+          </button>
+          
+          <button onClick={() => setActiveTab("volunteers")} style={{ backgroundColor: activeTab === "volunteers" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>🤝</span> Volunteers ({volunteers.length})
+          </button>
+          
+          <button onClick={() => setActiveTab("donations")} style={{ backgroundColor: activeTab === "donations" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>💰</span> Donations
+          </button>
+          
+          <button onClick={() => setActiveTab("team")} style={{ backgroundColor: activeTab === "team" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>👥</span> Team Members
+          </button>
+        </div>
         
-        <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "12px 20px", textAlign: "left", cursor: "pointer", marginTop: "20px", width: "100%" }}>Logout</button>
+        {/* Logout Button at Bottom */}
+        <div style={{ padding: "20px 12px 0 12px", borderTop: "1px solid #374151", marginTop: "20px" }}>
+          <button onClick={() => setAuthenticated(false)} style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "12px 20px", width: "100%", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>🚪</span> Logout
+          </button>
+        </div>
       </div>
 
       {/* Main Content */}
