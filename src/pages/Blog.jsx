@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -105,7 +106,16 @@ function Blog() {
                 <p style={{ color: "#666", lineHeight: "1.6", marginBottom: "15px" }}>{post.excerpt}</p>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "12px", color: "#999" }}>By {post.author} • {post.readTime}</span>
-                  <button style={{ backgroundColor: "transparent", color: "#e74c3c", border: "none", cursor: "pointer", fontWeight: "bold" }}>Read More →</button>
+                  <Link to={`/blog/${post.id}`} style={{ 
+                    backgroundColor: "transparent", 
+                    color: "#e74c3c", 
+                    border: "none", 
+                    cursor: "pointer", 
+                    fontWeight: "bold",
+                    textDecoration: "none"
+                  }}>
+                    Read More →
+                  </Link>
                 </div>
               </div>
             </div>

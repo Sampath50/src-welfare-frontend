@@ -15,6 +15,8 @@ import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import WhatsAppButton from './components/WhatsAppButton'
 import ScrollToTop from './components/ScrollToTop'
+import BlogPost from './pages/BlogPost'
+
 
 function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -132,6 +134,7 @@ function AppContent() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/donate" element={<DonateUs />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
 
       {!isAdminPage && <Footer />}
