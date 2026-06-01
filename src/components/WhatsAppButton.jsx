@@ -1,5 +1,5 @@
 function WhatsAppButton() {
-  const phoneNumber = "918374848542"; // Replace with your WhatsApp number (country code + number, no '+' or spaces)
+  const phoneNumber = "918374848542";
   const message = "Hello! I have a question about SRC Welfare Trust";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -27,7 +27,7 @@ function WhatsAppButton() {
       onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
     >
       <img
-        src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+        src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"
         alt="WhatsApp"
         style={{ width: "32px", height: "32px" }}
       />
