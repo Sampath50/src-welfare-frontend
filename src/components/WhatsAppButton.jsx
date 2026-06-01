@@ -11,7 +11,7 @@ function WhatsAppButton() {
       style={{
         position: "fixed",
         bottom: "20px",
-        left: "20px",
+        right: "20px",        // ← Changed from "left" to "right"
         backgroundColor: "#25D366",
         borderRadius: "50%",
         width: "60px",
