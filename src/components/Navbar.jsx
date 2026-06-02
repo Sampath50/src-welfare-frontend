@@ -1,43 +1,200 @@
-import { Link } from 'react-router-dom'
-import SearchBar from './SearchBar'
+import { useState, useEffect } from "react"
+import { Link, useLocation } from "react-router-dom"
 
 function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [location])
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Programs", path: "/programs" },
+    { name: "Gallery", path: "/gallery" },
+    { name: "Blog", path: "/blog" },
+    { name: "Events", path: "/events" },
+    { name: "Volunteer", path: "/volunteer" },
+    { name: "FAQ", path: "/faq" },
+    { name: "Contact", path: "/contact" }
+  ]
+
   return (
-    <nav style={{
-      backgroundColor: '#ffffff',
-      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 1000
-    }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '15px 40px',
-        maxWidth: '1400px',
-        margin: '0 auto'
+    <>
+      <nav style={{
+        position: "fixed",
+        top: 0,
+        width: "100%",
+        background: isScrolled ? "white" : "transparent",
+        boxShadow: isScrolled ? "0 2px 20px rgba(0,0,0,0.1)" : "none",
+        transition: "all 0.3s ease",
+        zIndex: 1000,
+        padding: "12px 0"
       }}>
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-          <img src="/favicon.png" alt="Logo" style={{ height: '40px', borderRadius: '10px' }} />
-          <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#1f2937' }}>SRC Welfare Trust</span>
-        </Link>
-        
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
-          <Link to="/" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>Home</Link>
-          <Link to="/about" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>About</Link>
-          <Link to="/programs" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>Programs</Link>
-          <Link to="/gallery" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>Gallery</Link>
-          <Link to="/blog" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>Blog</Link>
-          <Link to="/events" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>Events</Link>
-          <Link to="/volunteer" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>Volunteer</Link>
-          <Link to="/faq" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>FAQ</Link>
-          <Link to="/contact" style={{ color: '#4b5563', textDecoration: 'none', fontSize: '14px' }}>Contact</Link>
-          <Link to="/donate" style={{ backgroundColor: '#dc2626', color: 'white', padding: '8px 20px', borderRadius: '30px', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>Donate</Link>
-          <SearchBar />
+        <div style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0 20px"
+        }}>
+          
+          {/* YOUR ACTUAL LOGO IMAGE */}
+          <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "12px" }}>
+            <img 
+              src="/logo.png" 
+              alt="SRC Welfare Trust Logo" 
+              style={{
+                width: "50px",
+                height: "50px",
+                objectFit: "contain"
+              }}
+            />
+            <div>
+              <div style={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: isScrolled ? "#333" : "white",
+                transition: "color 0.3s"
+              }}>
+                SRC
+              </div>
+              <div style={{
+                fontSize: "10px",
+                fontWeight: "500",
+                color: isScrolled ? "#e74c3c" : "#fbbf24",
+                transition: "color 0.3s"
+              }}>
+                WELFARE TRUST
+              </div>
+            </div>
+          </Link>
+
+          {/* Desktop Menu */}
+          <div style={{ display: "flex", gap: "25px", alignItems: "center" }}>
+            <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  style={{
+                    color: isScrolled ? "#333" : "white",
+                    textDecoration: "none",
+                    fontSize: "14px",
+                    fontWeight: location.pathname === link.path ? "600" : "400",
+                    transition: "color 0.3s",
+                    borderBottom: location.pathname === link.path ? "2px solid #e74c3c" : "none",
+                    paddingBottom: "4px"
+                  }}
+                  onMouseEnter={(e) => e.target.style.color = "#e74c3c"}
+                  onMouseLeave={(e) => e.target.style.color = isScrolled ? "#333" : "white"}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+            
+            <Link to="/donate">
+              <button style={{
+                background: "#e74c3c",
+                color: "white",
+                padding: "10px 24px",
+                border: "none",
+                borderRadius: "25px",
+                cursor: "pointer",
+                fontWeight: "600",
+                fontSize: "14px",
+                transition: "all 0.3s"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = "#c0392b"
+                e.target.style.transform = "scale(1.05)"
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = "#e74c3c"
+                e.target.style.transform = "scale(1)"
+              }}>
+                Donate
+              </button>
+            </Link>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{
+                display: "none",
+                background: "none",
+                border: "none",
+                fontSize: "24px",
+                cursor: "pointer",
+                color: isScrolled ? "#333" : "white"
+              }}
+            >
+              ☰
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+
+        {mobileMenuOpen && (
+          <div style={{
+            position: "absolute",
+            top: "70px",
+            left: 0,
+            right: 0,
+            background: "white",
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
+          }}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                style={{
+                  color: "#333",
+                  textDecoration: "none",
+                  padding: "10px",
+                  fontSize: "16px",
+                  textAlign: "center"
+                }}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Link to="/donate" onClick={() => setMobileMenuOpen(false)}>
+              <button style={{
+                width: "100%",
+                background: "#e74c3c",
+                color: "white",
+                padding: "12px",
+                border: "none",
+                borderRadius: "25px",
+                cursor: "pointer",
+                fontWeight: "600"
+              }}>
+                Donate Now
+              </button>
+            </Link>
+          </div>
+        )}
+      </nav>
+
+      <div style={{ height: "74px" }} />
+    </>
   )
 }
 
