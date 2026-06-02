@@ -19,6 +19,7 @@ function Admin() {
   const [authenticated, setAuthenticated] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [currentAdminPassword, setCurrentAdminPassword] = useState("admin123")
+  const [eventRegistrations, setEventRegistrations] = useState([]) // 👈 ADDED
   
   // Edit modal states
   const [editModalOpen, setEditModalOpen] = useState(false)
@@ -94,6 +95,7 @@ function Admin() {
       fetchBlogs()
       fetchSocialLinks()
       fetchReport()
+      fetchEventRegistrations() // 👈 ADDED
     } else {
       alert("Wrong username or password!")
     }
@@ -182,6 +184,17 @@ function Admin() {
       if (data.success) setReportData(data.report)
     } catch (error) {
       console.error("Error fetching report:", error)
+    }
+  }
+
+  // 👇 ADDED: Fetch event registrations
+  const fetchEventRegistrations = async () => {
+    try {
+      const response = await fetch("https://src-welfare-backend.onrender.com/api/events/all")
+      const data = await response.json()
+      if (data.success) setEventRegistrations(data.registrations)
+    } catch (error) {
+      console.error("Error fetching registrations:", error)
     }
   }
 
@@ -702,6 +715,14 @@ function Admin() {
           <button onClick={() => setActiveTab("social")} style={{ backgroundColor: activeTab === "social" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>🔗</span> Social Links</button>
           <button onClick={() => setActiveTab("reports")} style={{ backgroundColor: activeTab === "reports" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>📊</span> Reports</button>
           <button onClick={() => setActiveTab("export")} style={{ backgroundColor: activeTab === "export" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}><span style={{ fontSize: "18px" }}>💾</span> Backup & Export</button>
+          
+          {/* 👇 ADDED: Event Registrations Button */}
+          <button onClick={() => {
+            setActiveTab("registrations")
+            fetchEventRegistrations()
+          }} style={{ backgroundColor: activeTab === "registrations" ? "#e74c3c" : "transparent", color: "white", border: "none", padding: "12px 20px", margin: "0 12px", textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", borderRadius: "8px", fontSize: "14px" }}>
+            <span style={{ fontSize: "18px" }}>📋</span> Event Registrations ({eventRegistrations.length})
+          </button>
         </div>
         
         <div style={{ padding: "20px 12px 0 12px", borderTop: "1px solid #374151", marginTop: "20px" }}>
@@ -823,7 +844,7 @@ function Admin() {
           </div>
         )}
 
-        {/* Donations - Updated with correct INR conversion */}
+        {/* Donations */}
         {activeTab === "donations" && (
           <div>
             <h2>Donations</h2>
@@ -904,7 +925,7 @@ function Admin() {
           </div>
         )}
 
-        {/* Testimonials with Edit */}
+        {/* Testimonials */}
         {activeTab === "testimonials" && (
           <div>
             <h2>Testimonials Management</h2>
@@ -936,7 +957,6 @@ function Admin() {
               </div>
             ))}
             
-            {/* Edit Testimonial Modal */}
             {editTestimonialModal && (
               <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }} onClick={() => setEditTestimonialModal(false)}>
                 <div style={{ backgroundColor: "white", padding: "25px", borderRadius: "10px", width: "500px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
@@ -1066,6 +1086,41 @@ function Admin() {
               <button onClick={() => exportToCSV(volunteers, "volunteers")} style={{ backgroundColor: "#10b981", color: "white", border: "none", padding: "12px 24px", borderRadius: "5px", cursor: "pointer", marginRight: "10px" }}>🤝 Export Volunteers CSV</button>
               <button onClick={() => exportToCSV(donations, "donations")} style={{ backgroundColor: "#10b981", color: "white", border: "none", padding: "12px 24px", borderRadius: "5px", cursor: "pointer" }}>💰 Export Donations CSV</button>
             </div>
+          </div>
+        )}
+
+        {/* 👇 ADDED: Event Registrations Tab Content */}
+        {activeTab === "registrations" && (
+          <div>
+            <h2>Event Registrations</h2>
+            <p style={{ color: "#666", marginBottom: "20px" }}>People who registered for events</p>
+            
+            {eventRegistrations.length === 0 ? (
+              <div style={{ backgroundColor: "white", padding: "40px", borderRadius: "10px", textAlign: "center" }}>
+                <p>No registrations yet.</p>
+              </div>
+            ) : (
+              eventRegistrations.map((reg) => (
+                <div key={reg._id} style={{ backgroundColor: "white", padding: "20px", marginBottom: "15px", borderRadius: "10px", border: "1px solid #eee" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap" }}>
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ margin: "0 0 5px 0", color: "#e74c3c" }}>{reg.name}</h4>
+                      <p style={{ margin: "5px 0" }}>📧 {reg.email}</p>
+                      <p style={{ margin: "5px 0" }}>📞 {reg.phone}</p>
+                      {reg.city && <p style={{ margin: "5px 0" }}>📍 City: {reg.city}</p>}
+                      {reg.age && <p style={{ margin: "5px 0" }}>🎂 Age: {reg.age}</p>}
+                      <p style={{ margin: "10px 0 5px 0", padding: "8px", backgroundColor: "#fef2f2", borderRadius: "5px" }}>
+                        🎯 <strong>{reg.eventTitle}</strong><br />
+                        📅 {reg.eventDate} | ⏰ {reg.eventTime}<br />
+                        📍 {reg.eventLocation}
+                      </p>
+                      {reg.message && <p style={{ margin: "5px 0", color: "#666", fontStyle: "italic" }}>📝 "{reg.message}"</p>}
+                      <small style={{ color: "#999" }}>Registered: {new Date(reg.registeredAt).toLocaleString()}</small>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>
