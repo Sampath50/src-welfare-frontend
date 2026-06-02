@@ -132,10 +132,8 @@ function Events() {
                     border: "none", 
                     borderRadius: "5px", 
                     cursor: "pointer",
-                    transition: "background-color 0.3s"
+                    fontWeight: "bold"
                   }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = "#c0392b"}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = "#e74c3c"}
                 >
                   Register Now
                 </button>
@@ -166,26 +164,22 @@ function Events() {
             width: "500px",
             maxWidth: "90%",
             maxHeight: "90%",
-            overflowY: "auto",
-            position: "relative"
+            overflowY: "auto"
           }} onClick={(e) => e.stopPropagation()}>
             
             {!submitted ? (
               <>
-                {/* Modal Header */}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
                   <h2 style={{ color: "#e74c3c", margin: 0 }}>Register for Event</h2>
                   <button onClick={closeModal} style={{ background: "none", border: "none", fontSize: "24px", cursor: "pointer", color: "#666" }}>✕</button>
                 </div>
                 
-                {/* Event Details */}
                 <div style={{ backgroundColor: "#fef2f2", padding: "15px", borderRadius: "8px", marginBottom: "20px" }}>
                   <p style={{ fontWeight: "bold", margin: "0 0 5px 0" }}>{selectedEvent.title}</p>
                   <p style={{ margin: "5px 0", fontSize: "14px", color: "#666" }}>📅 {selectedEvent.date} | ⏰ {selectedEvent.time}</p>
                   <p style={{ margin: "5px 0", fontSize: "14px", color: "#666" }}>📍 {selectedEvent.location}</p>
                 </div>
                 
-                {/* Registration Form */}
                 <form onSubmit={handleSubmit}>
                   <input
                     type="text"
@@ -281,12 +275,10 @@ function Events() {
                 </form>
               </>
             ) : (
-              /* Success Message */
               <div style={{ textAlign: "center", padding: "40px 20px" }}>
                 <div style={{ fontSize: "60px", marginBottom: "20px" }}>✅</div>
                 <h3 style={{ color: "#27ae60", marginBottom: "10px" }}>Registration Successful!</h3>
-                <p style={{ color: "#666", marginBottom: "5px" }}>Thank you for registering for {selectedEvent.title}.</p>
-                <p style={{ color: "#666" }}>We will send you event details via email.</p>
+                <p style={{ color: "#666" }}>Thank you for registering! We will send you event details via email.</p>
               </div>
             )}
           </div>
