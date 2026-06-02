@@ -51,10 +51,10 @@ function Navbar() {
           padding: "0 20px"
         }}>
           
-          {/* YOUR LOGO - NEW FILENAME */}
+          {/* YOUR LOGO - DIRECT GITHUB URL (BYPASSES ALL CACHE) */}
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
             <img 
-              src="/src-logo.png" 
+              src="https://raw.githubusercontent.com/Sampath50/src-welfare-frontend/main/public/src-logo.png" 
               alt="SRC Logo" 
               style={{ width: "50px", height: "50px", objectFit: "contain" }} 
             />
