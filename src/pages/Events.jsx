@@ -19,7 +19,7 @@ function Events() {
     {
       id: 1,
       title: "Annual Charity Run",
-      date: "April 20, 2024",
+      date: "August 20, 2026",
       time: "7:00 AM - 10:00 AM",
       location: "Marina Beach, Chennai",
       description: "Join us for a 5K run to raise funds for education",
@@ -28,7 +28,7 @@ function Events() {
     {
       id: 2,
       title: "Free Health Checkup Camp",
-      date: "April 25, 2024",
+      date: "September 25, 2026",
       time: "9:00 AM - 5:00 PM",
       location: "Community Hall, Velachery",
       description: "Free medical consultation and medicines",
@@ -37,7 +37,7 @@ function Events() {
     {
       id: 3,
       title: "Education Awareness Workshop",
-      date: "May 5, 2024",
+      date: "November 5, 2026",
       time: "10:00 AM - 3:00 PM",
       location: "Government School, Tambaram",
       description: "Workshop on importance of girl child education",
