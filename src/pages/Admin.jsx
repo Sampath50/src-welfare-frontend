@@ -672,7 +672,6 @@ function Admin() {
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required style={{ width: "100%", padding: "12px", marginBottom: "20px", borderRadius: "8px", border: "1px solid #ccc" }} />
             <button type="submit" style={{ width: "100%", padding: "12px", backgroundColor: "#e74c3c", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>Login</button>
           </form>
-          <p style={{ textAlign: "center", marginTop: "20px", fontSize: "12px", color: "#666" }}>Username: admin | Password: admin123</p>
         </div>
       </div>
     )
