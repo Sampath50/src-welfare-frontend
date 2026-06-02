@@ -51,9 +51,13 @@ function Navbar() {
           padding: "0 20px"
         }}>
           
-          {/* YOUR LOGO - Just this simple img tag */}
+          {/* YOUR LOGO - NEW FILENAME */}
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-            <img src="/logo.png" alt="SRC Logo" style={{ width: "50px", height: "50px" }} />
+            <img 
+              src="/src-logo.png" 
+              alt="SRC Logo" 
+              style={{ width: "50px", height: "50px", objectFit: "contain" }} 
+            />
             <div>
               <div style={{ fontSize: "16px", fontWeight: "bold", color: isScrolled ? "#333" : "white" }}>SRC</div>
               <div style={{ fontSize: "10px", color: isScrolled ? "#e74c3c" : "#fbbf24" }}>WELFARE TRUST</div>
