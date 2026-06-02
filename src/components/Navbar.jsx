@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
+import logo from "../assets/logo.png.png"  // Using your logo from assets
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -51,10 +52,10 @@ function Navbar() {
           padding: "0 20px"
         }}>
           
-          {/* YOUR ACTUAL LOGO IMAGE */}
+          {/* YOUR LOGO FROM ASSETS FOLDER */}
           <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "12px" }}>
             <img 
-              src="/logo.png" 
+              src={logo} 
               alt="SRC Welfare Trust Logo" 
               style={{
                 width: "50px",
@@ -130,6 +131,7 @@ function Navbar() {
               </button>
             </Link>
 
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               style={{
@@ -146,6 +148,7 @@ function Navbar() {
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div style={{
             position: "absolute",
