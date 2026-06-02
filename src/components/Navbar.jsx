@@ -30,6 +30,9 @@ function Navbar() {
     { name: "Contact", path: "/contact" }
   ]
 
+  // Cache-busting timestamp
+  const logoUrl = `https://i.ibb.co/9HyYvh6x/logo-of-src.png?t=${Date.now()}`
+
   return (
     <>
       <nav style={{
@@ -51,10 +54,10 @@ function Navbar() {
           padding: "0 20px"
         }}>
           
-          {/* YOUR LOGO - WORKING DIRECT LINK */}
+          {/* YOUR LOGO WITH CACHE BUSTER */}
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
             <img 
-              src="https://i.ibb.co/9HyYvh6x/logo-of-src.png" 
+              src={logoUrl}
               alt="SRC Logo" 
               style={{ 
                 width: "50px", 
