@@ -7,7 +7,7 @@ function Home() {
   
   // Default content - shows immediately (no loading)
   const [content, setContent] = useState({
-    hero: { title: "SRC Welfare Trust", subtitle: "Together we can support education, healthcare, food drives, and social welfare programs." },
+    hero: { title: "SRC Charity", subtitle: "Together we can support education, healthcare, food drives, and social welfare programs." },
     stats: [{ number: "500+", label: "Families Helped" }, { number: "1200+", label: "Students Supported" }, { number: "50+", label: "Medical Camps" }, { number: "100+", label: "Volunteers" }],
     mission: { title: "Our Mission", text: "To empower underserved communities through education, healthcare, and social welfare programs." }
   })
