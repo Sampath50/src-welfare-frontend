@@ -16,7 +16,7 @@ function Footer() {
                 objectFit: "contain"
               }} 
             />
-            <h3>SRC Welfare Trust</h3>
+            <h3>SRC Charity </h3>
           </div>
           <p>Making a difference in lives through education, healthcare, and social welfare programs.</p>
         </div>
@@ -41,7 +41,7 @@ function Footer() {
           <h4>Contact Info</h4>
           <p>📍 D.No.1-1-27/2 Plot No-2 3rd floor Kapra, Hyderabad, Telangana</p>
           <p>📞 +91 8184898542</p>
-          <p>📧 srcwelfare@info.org</p>
+          <p>📧 srccharity@info.org</p>
         </div>
         
         <div>
