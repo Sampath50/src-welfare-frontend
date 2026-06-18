@@ -79,7 +79,7 @@ function ContactUs() {
               <div>
                 <h3 style={{ margin: "0 0 5px 0", fontSize: "18px" }}>Email</h3>
                 <p style={{ margin: 0, color: "#666" }}>
-                  info@srcwelfare.org
+                  info@srccharity.org
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ function ContactUs() {
                   <div style={{ fontSize: "30px" }}>📧</div>
                   <div>
                     <h4 style={{ margin: "0 0 5px 0" }}>Email Us Directly</h4>
-                    <p style={{ margin: 0, color: "#e74c3c" }}>care@srcwelfare.org</p>
+                    <p style={{ margin: 0, color: "#e74c3c" }}>care@srccharity.org</p>
                   </div>
                 </div>
               </div>
