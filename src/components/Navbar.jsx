@@ -68,7 +68,7 @@ function Navbar() {
             />
             <div>
               <div style={{ fontSize: "16px", fontWeight: "bold", color: isScrolled ? "#333" : "white" }}>SRC</div>
-              <div style={{ fontSize: "10px", color: isScrolled ? "#e74c3c" : "#fbbf24" }}>WELFARE TRUST</div>
+              <div style={{ fontSize: "10px", color: isScrolled ? "#e74c3c" : "#fbbf24" }}> Charity </div>
             </div>
           </Link>
 
